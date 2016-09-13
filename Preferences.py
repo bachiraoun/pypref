@@ -17,8 +17,8 @@ class Preferences(object):
     dictionary will be initialized to an empty dictionary. Preferences can be 
     accessed like a dictionary or using get method.
     
-    It is advisable to use this python applications and wrap it in a singleton wrapper 
-    as te following.
+    When used in python a application, it is advisable to wrap this class in a singleton
+    as the following:
     
     
     .. code-block:: python
@@ -181,7 +181,7 @@ A valid filename must not contain especial characters or operating system separa
         All preferences setters such as set_preferences and update_preferences
         call check_preferences prior to setting anything. This method returns 
         a check flag and a message, if the flag is False, the message is raised 
-        as an error as in the following.
+        as an error like the following.
         
         .. code-block:: python
     
