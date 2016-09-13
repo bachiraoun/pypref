@@ -6,6 +6,18 @@ created and stored in a text file. At some point preferences are pulled and upda
 by the application and the users.
 pypref is especially designed to take care of this task automatically and make programing
 application's preferences more desirable.
+
+Installation guide:
+===================
+pypref is a pure python 2.7.x module that needs no particular installation. One can either 
+fork pypref's `github repository <https://github.com/bachiraoun/pypref/>`_ and copy the 
+package to python's site-packages or use pip as the following:
+
+
+.. code-block:: console
+    
+    
+        pip install pypref
 """
 from __pkginfo__ import __version__, __author__, __email__, __onlinedoc__, __repository__, __pypi__
 from Preferences import Preferences
@@ -15,11 +27,11 @@ def get_version():
     return __version__ 
 
 def get_author():
-    """Get pypref's author name."""
+    """Get pypref's author's name."""
     return __author__     
  
 def get_email():
-    """Get pypref's official email."""
+    """Get pypref's author's email."""
     return __email__   
     
 def get_doc():

@@ -11,7 +11,7 @@ from __pkginfo__ import __version__
 class Preferences(object):
     """
     This is pypref main preferences class definition. This class is used to create, load
-    and update application's preferences dictionary in memory and in file.\n
+    and update application's preferences dictionary in memory and in file.
     At initialization, a preferences dictionary will be pulled from the given directory
     and filename if existing. Otherwise, preferences file will be created and preferences
     dictionary will be initialized to an empty dictionary. Preferences can be 
