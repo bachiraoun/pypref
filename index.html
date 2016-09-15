@@ -6,15 +6,15 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Welcome to pypref’s documentation! &#8212; PYthon PREFresnces package. pypref v1.0.0</title>
+    <title>Welcome to pypref’s documentation! &#8212; PYthon PREFresnces package. pypref v1.0.1</title>
     
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/agogo.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '1.0.0',
+        VERSION:     '1.0.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,18 +23,26 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PYthon PREFresnces package. pypref v1.0.0" href="#" />
-   
-  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
-
+    <link rel="top" title="PYthon PREFresnces package. pypref v1.0.1" href="#" /> 
   </head>
   <body role="document">
-  
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="#">PYthon PREFresnces package. pypref v1.0.1</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a>
+        </div>
+       </div>
+    </div>
 
-    <div class="document">
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
       <div class="documentwrapper">
           <div class="body" role="main">
             
@@ -55,16 +63,19 @@ package to python&#8217;s site-packages or use pip as the following:</p>
 <div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">pip install pypref</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="package-functions">
+<h2>Package Functions:<a class="headerlink" href="#package-functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="pypref.get_version">
+<code class="descclassname">pypref.</code><code class="descname">get_version</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pypref.get_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get pypref&#8217;s version number.</p>
+</dd></dl>
+
 <dl class="function">
 <dt id="pypref.get_author">
 <code class="descclassname">pypref.</code><code class="descname">get_author</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pypref.get_author" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get pypref&#8217;s author&#8217;s name.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="pypref.get_doc">
-<code class="descclassname">pypref.</code><code class="descname">get_doc</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pypref.get_doc" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get pypref&#8217;s official online documentation link.</p>
 </dd></dl>
 
 <dl class="function">
@@ -74,9 +85,9 @@ package to python&#8217;s site-packages or use pip as the following:</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="pypref.get_pypi">
-<code class="descclassname">pypref.</code><code class="descname">get_pypi</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pypref.get_pypi" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get pypref&#8217;s official online repository link.</p>
+<dt id="pypref.get_doc">
+<code class="descclassname">pypref.</code><code class="descname">get_doc</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pypref.get_doc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get pypref&#8217;s official online documentation link.</p>
 </dd></dl>
 
 <dl class="function">
@@ -86,12 +97,14 @@ package to python&#8217;s site-packages or use pip as the following:</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="pypref.get_version">
-<code class="descclassname">pypref.</code><code class="descname">get_version</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pypref.get_version" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get pypref&#8217;s version number.</p>
+<dt id="pypref.get_pypi">
+<code class="descclassname">pypref.</code><code class="descname">get_pypi</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pypref.get_pypi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get pypref pypi&#8217;s link.</p>
 </dd></dl>
 
 </div>
+<div class="section" id="main-preferences-module">
+<h2>Main Preferences module:<a class="headerlink" href="#main-preferences-module" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt>
 <em class="property">class </em><code class="descclassname">pypref.Preferences.</code><code class="descname">Preferences</code><span class="sig-paren">(</span><em>directory=None</em>, <em>filename='preferences.py'</em><span class="sig-paren">)</span></dt>
@@ -100,9 +113,9 @@ package to python&#8217;s site-packages or use pip as the following:</p>
 and update application&#8217;s preferences dictionary in memory and in file.
 At initialization, a preferences dictionary will be pulled from the given directory
 and filename if existing. Otherwise, preferences file will be created and preferences
-dictionary will be initialized to an empty dictionary. Preferences can be 
-accessed like a dictionary or using get method.</p>
-<p>When used in python a application, it is advisable to wrap this class in a singleton
+dictionary will be initialized to an empty dictionary. Preferences can be accessed 
+like any python dictionary by slicing a key preference [key] or by using get method.</p>
+<p>When used in a python application, it is advisable to wrap this class in a singleton
 as the following:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pypref</span> <span class="kn">import</span> <span class="n">Preferences</span>
 
@@ -128,6 +141,55 @@ If None is given, preferences will be create in user&#8217;s home directory.</li
 </tr>
 </tbody>
 </table>
+<dl class="attribute">
+<dt>
+<code class="descname">directory</code></dt>
+<dd><p>Preferences file directory.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">filename</code></dt>
+<dd><p>Preferences file name.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">fullpath</code></dt>
+<dd><p>Preferences file full path.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">preferences</code></dt>
+<dd><p>Preferences dictionary copy.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">get</code><span class="sig-paren">(</span><em>key</em>, <em>default=None</em><span class="sig-paren">)</span></dt>
+<dd><p>Get the preferences value for the given key. 
+If key is not available then returns then given default value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ol class="first arabic simple">
+<li>key (object): The Key to be searched in the preferences.</li>
+<li>default (object): The Value to be returned in case key does not exist.</li>
+</ol>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><ol class="first last arabic simple">
+<li>value (object): The value of the given key or given default value is 
+key does not exist.</li>
+</ol>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 <dl class="method">
 <dt>
 <code class="descname">check_preferences</code><span class="sig-paren">(</span><em>preferences</em><span class="sig-paren">)</span></dt>
@@ -135,7 +197,7 @@ If None is given, preferences will be create in user&#8217;s home directory.</li
 All preferences setters such as set_preferences and update_preferences
 call check_preferences prior to setting anything. This method returns 
 a check flag and a message, if the flag is False, the message is raised 
-as an error like the following.</p>
+as an error like the following:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">flag</span><span class="p">,</span> <span class="n">m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_preferences</span><span class="p">(</span><span class="n">preferences</span><span class="p">)</span>
 <span class="k">assert</span> <span class="n">flag</span><span class="p">,</span> <span class="n">m</span>
 </pre></div>
@@ -157,55 +219,6 @@ as an error like the following.</p>
 </tr>
 </tbody>
 </table>
-</dd></dl>
-
-<dl class="attribute">
-<dt>
-<code class="descname">directory</code></dt>
-<dd><p>Preferences file directory.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt>
-<code class="descname">filename</code></dt>
-<dd><p>Preferences file name.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt>
-<code class="descname">fullpath</code></dt>
-<dd><p>Preferences file full path.</p>
-</dd></dl>
-
-<dl class="method">
-<dt>
-<code class="descname">get</code><span class="sig-paren">(</span><em>key</em>, <em>default=None</em><span class="sig-paren">)</span></dt>
-<dd><p>Get the preferences value for the given key. 
-If key is not available then returns default value None.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ol class="first arabic simple">
-<li>key (object): The Key to be searched in the preferences.</li>
-<li>default (object): The Value to be returned in case key does not exist.</li>
-</ol>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><ol class="first last arabic simple">
-<li>value (object): The value of the given key or given default value is 
-key does not exist.</li>
-</ol>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt>
-<code class="descname">preferences</code></dt>
-<dd><p>Preferences dictionary copy.</p>
 </dd></dl>
 
 <dl class="method">
@@ -245,23 +258,51 @@ key does not exist.</li>
 </dd></dl>
 
 </div>
+</div>
 
 
           </div>
       </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="footer">
-      &copy;2016, Bachir Aoun.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.6</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
-      
+        </div>
+        <div class="sidebar">
+          <h3>Table Of Contents</h3>
+          
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">Search</h3>
+            <form class="search" action="search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+            </form>
+          </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
     </div>
 
-    
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="py-modindex.html" title="Python Module Index"
+              >modules</a> |
+            <a href="genindex.html" title="General Index"
+              >index</a>
+          </div>
+          <div role="note" aria-label="source link">
+          </div>
+        </div>
 
-    
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, Bachir Aoun.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
   </body>
 </html>
