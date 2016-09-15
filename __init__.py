@@ -18,6 +18,10 @@ package to python's site-packages or use pip as the following:
     
     
         pip install pypref
+        
+
+Package Functions:
+==================
 """
 from __pkginfo__ import __version__, __author__, __email__, __onlinedoc__, __repository__, __pypi__
 from Preferences import Preferences
@@ -43,5 +47,8 @@ def get_repository():
     return __repository__        
     
 def get_pypi():
-    """Get pypref's official online repository link."""
-    return __pypi__        
+    """Get pypref pypi's link."""
+    return __pypi__   
+    
+    
+         

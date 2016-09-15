@@ -1,3 +1,7 @@
+"""
+Preferences main module:
+========================
+"""
 # standard library imports
 import sys, os, copy, tempfile
 #from importlib import import_module
@@ -14,10 +18,10 @@ class Preferences(object):
     and update application's preferences dictionary in memory and in file.
     At initialization, a preferences dictionary will be pulled from the given directory
     and filename if existing. Otherwise, preferences file will be created and preferences
-    dictionary will be initialized to an empty dictionary. Preferences can be 
-    accessed like a dictionary or using get method.
+    dictionary will be initialized to an empty dictionary. Preferences can be accessed 
+    like any python dictionary by slicing a key preference [key] or by using get method.
     
-    When used in python a application, it is advisable to wrap this class in a singleton
+    When used in a python application, it is advisable to wrap this class in a singleton
     as the following:
     
     
@@ -127,8 +131,6 @@ A valid filename must not contain especial characters or operating system separa
         for k, v in preferences.items():
             if isinstance(k, basestring):
                 k = self.__get_normalized_string(k)
-            print v
-            print isinstance(v, basestring)
             if isinstance(v, basestring):
                 v = self.__get_normalized_string(v)
             lines += "preferences[%s] = %s\n"%(k, v)
@@ -163,7 +165,7 @@ A valid filename must not contain especial characters or operating system separa
     def get(self, key, default=None):
         """
         Get the preferences value for the given key. 
-        If key is not available then returns default value None.
+        If key is not available then returns then given default value.
         
         :Parameters:
             #. key (object): The Key to be searched in the preferences.
@@ -181,7 +183,7 @@ A valid filename must not contain especial characters or operating system separa
         All preferences setters such as set_preferences and update_preferences
         call check_preferences prior to setting anything. This method returns 
         a check flag and a message, if the flag is False, the message is raised 
-        as an error like the following.
+        as an error like the following:
         
         .. code-block:: python
     

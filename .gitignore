@@ -1,2 +1,6 @@
 *.pyc
 *.log
+docs/*
+dist/*
+pypref.egg-info/*
+MANIFEST.in
