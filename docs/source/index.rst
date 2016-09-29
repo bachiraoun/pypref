@@ -1,5 +1,5 @@
-Welcome to pypref's documentation!
-==================================
+Welcome to pypref V. |VERSION| documentation!
+=============================================
 
 .. automodule:: pypref
     :members:
