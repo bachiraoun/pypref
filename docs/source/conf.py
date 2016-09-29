@@ -129,13 +129,21 @@ autodoc_member_order = 'bysource'
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'agogo'
+html_theme = 'alabaster'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
-# html_theme_options = {}
+#html_theme_options = {}
+html_theme_options = {
+    'github_user': "bachiraoun",
+    'github_repo': "pypref",
+    'github_banner': True,
+    'show_powered_by':False,
+}
+
+
 
 # Add any paths that contain custom themes here, relative to this directory.
 # html_theme_path = []
@@ -143,7 +151,9 @@ html_theme = 'agogo'
 # The name for this set of Sphinx documents.
 # "<project> v<release> documentation" by default.
 #
-html_title = u'PYthon PREFresnces package. pypref v%s'%VER
+html_title = u'PYthon PREFrences package. pypref v%s'%VER
+html_short_title = html_title
+project_name = html_title
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
 #
@@ -188,10 +198,7 @@ html_sidebars = {
    '**': [],
    'using/windows': [],
 }
-#html_sidebars = {
-#   '**': ['globaltoc.html', 'sourcelink.html', 'searchbox.html'],
-#   'using/windows': ['windowssidebar.html', 'searchbox.html'],
-#}
+
 
 # Additional templates that should be rendered to pages, maps page names to
 # template names.

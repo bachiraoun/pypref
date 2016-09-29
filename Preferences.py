@@ -1,4 +1,48 @@
 """
+Usage:
+======
+This example shows how to use pypref.
+
+
+.. code-block:: python
+    
+        from pypref import Preferences
+        
+        #  create preferences instance
+        pref = Preferences(filename="preferences_test.py")
+        
+        # create preferences dict example
+        pdict = {'preference 1': 1,
+                 12345: 'I am a number'}
+        
+        # set preferences. This would automatically create preferences_test.py 
+        # in your home directory. Go and check it.
+        pref.set_preferences(pdict)
+        
+        # let update the preferences. This would automatically update preferences_test.py
+        # file, you can verify that. 
+        pref.update_preferences({'preference 1': 2})
+        
+        # lets get some preferences. This would return the value of the preference if
+        # it is defined or default value if it is not.
+        print pref.get('preference 1')
+        
+        # In some cases we must use raw strings. This is most likely needed when
+        # working with paths in a windows systems or when a preference includes
+        # especial characters. That's how to do it ...
+        pref.update_preferences({'my path': " r'C:\Users\Me\Desktop' "})
+        
+        # those preferences can be accessed later. Let's simulate that by creating
+        # another preferences instances which will automatically detect the 
+        # existance of a preferences file and connect to it
+        newPref = Preferences(filename="preferences_test.py")
+        
+        # let's print 'my path' preference
+        print newPref.get('my path')
+        
+        
+        
+        
 Preferences main module:
 ========================
 """
@@ -203,7 +247,7 @@ A valid filename must not contain especial characters or operating system separa
         
     def set_preferences(self, preferences):
         """
-        Set preferences and update preferences file.
+        Set preferences and write preferences file by erasing any existing one.
         
         :Parameters:
             #. preferences (dictionary): The preferences dictionary.
