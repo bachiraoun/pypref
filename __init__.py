@@ -24,7 +24,7 @@ Package Functions:
 ==================
 """
 from __pkginfo__ import __version__, __author__, __email__, __onlinedoc__, __repository__, __pypi__
-from Preferences import Preferences
+from Preferences import Preferences, SinglePreferences
 
 def get_version():
     """Get pypref's version number."""

@@ -65,24 +65,29 @@ class Preferences(object):
     dictionary will be initialized to an empty dictionary. Preferences can be accessed 
     like any python dictionary by slicing a key preference [key] or by using get method.
     
-    When used in a python application, it is advisable to wrap this class in a singleton
-    as the following:
-    
+    When used in a python application, it is advisable to use Preferences singleton 
+    implementation and not Preferences itself.
+    if no overloading is needed one can simply import the singleton as the following:
     
     .. code-block:: python
-    
-    
-        from pypref import Preferences
         
-        class MyPreferences(Preferences):
-            def __new__(cls, *args, **kwds):
-                thisSingleton = cls.__dict__.get("__thisSingleton__")
-                if thisSingleton is not None:
-                    return thisSingleton
-                cls.__thisSingleton__ = thisSingleton = Preferences.__new__(cls)
-                return thisSingleton
-         
+        from pypref import SinglePreferences as Preferences
     
+    
+    
+    In case overloading is needed, this is how it could be done:    
+    
+    .. code-block:: python
+        
+        from pypref import SinglePreferences as PREF
+        
+        class Preferences(PREF):
+            def __init__(self, *args, **kwargs):
+                if self._isInitialized: return
+                super(Preferences, self).__init__(*args, **kwargs)
+                # hereinafter any further instanciation can be coded
+                
+         
     :Parameters:
         #. directory (None, path): The directory where to create preferences file.
            If None is given, preferences will be create in user's home directory.
@@ -285,7 +290,28 @@ A valid filename must not contain especial characters or operating system separa
         
             
             
-            
+class SinglePreferences(Preferences):
+    """
+    This is singleton implementation of Preferences class.
+    """
+    __thisInstance = None
+    def __new__(cls, *args, **kwds):
+        if cls.__thisInstance is None:
+            cls.__thisInstance = super(SinglePreferences,cls).__new__(cls)
+            cls.__thisInstance._isInitialized = False
+        return cls.__thisInstance
+    
+    def __init__(self, *args, **kwargs):      
+        if (self._isInitialized): return
+        # initialize
+        super(SinglePreferences, self).__init__(*args, **kwargs)
+        # update flag
+        self._isInitialized = True
+        
+
+
+        
+                    
             
             
             
