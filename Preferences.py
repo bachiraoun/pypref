@@ -88,13 +88,27 @@ class Preferences(object):
     
     
     
-    In case overloading is needed, this is how it could be done:    
+    Recommended overloading implementation, this is how it could be done:    
     
     .. code-block:: python
         
         from pypref import SinglePreferences as PREF
         
         class Preferences(PREF):
+            # *args and **kwargs can be replace by fixed arguments
+            def custom_init(self, *args, **kwargs):
+                # hereinafter any further instanciation can be coded
+                
+                
+                
+    In case overloading __init__ is needed, this is how it could be done:    
+    
+    .. code-block:: python
+        
+        from pypref import SinglePreferences as PREF
+        
+        class Preferences(PREF):
+            # custom_init will still be called in super(Preferences, self).__init__(*args, **kwargs)
             def __init__(self, *args, **kwargs):
                 if self._isInitialized: return
                 super(Preferences, self).__init__(*args, **kwargs)
@@ -105,14 +119,26 @@ class Preferences(object):
         #. directory (None, path): The directory where to create preferences file.
            If None is given, preferences will be create in user's home directory.
         #. filename (string): The preferences file name.
+        #. *args (): This is used to send non-keyworded variable length argument 
+           list to custom initialize. args will be parsed and used in custom_init method.
+        #. **kwargs (): This allows passing keyworded variable length of arguments to
+           custom_init method. kwargs can be anything other than 'directory' and 
+           'filename'.
+    
+    **N.B. args and kwargs are not used by __init__ method but passed to custom_init
+    at the end of initialization. custom_init method is an empty method that can be
+    overloaded**   
     """
-    def __init__(self, directory=None, filename="preferences.py"):
+    def __init__(self, directory=None, filename="preferences.py", *args, **kwargs):
         self.__set_directory(directory=directory)
         self.__set_filename(filename=filename)
         # load existing or create file
         self.__preferences = {}
         self.__dynamic     = {}
         self.__load_or_create()
+        # custom initialize
+        self.custom_init( *args, **kwargs )
+        
     
     def __getitem__(self, key):
         pref = dict.__getitem__(self.__preferences, key)
@@ -265,7 +291,22 @@ A valid filename must not contain especial characters or operating system separa
     def dynamic(self):
         """Dynamic dictionary copy."""
         return copy.deepcopy(self.__dynamic)
-            
+    
+    def custom_init(self, *args, **kwargs):
+        """
+        Custom initialize abstract method. This method will be called  at the end of 
+        initialzation. This method needs to be overloaded to custom initialize 
+        Preferences instances. 
+        
+        :Parameters:
+            #. *args (): This is used to send non-keyworded variable length argument 
+               list to custom initialize. 
+            #. **kwargs (): This allows passing keyworded variable length of arguments to
+               custom_init method. kwargs can be anything other than 'directory' and 
+               'filename'.
+        """
+        pass
+             
     def get(self, key, default=None):
         """
         Get the preferences value for the given key. 
