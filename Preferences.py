@@ -119,9 +119,9 @@ class Preferences(object):
         #. directory (None, path): The directory where to create preferences file.
            If None is given, preferences will be create in user's home directory.
         #. filename (string): The preferences file name.
-        #. *args (): This is used to send non-keyworded variable length argument 
+        #. \*args (): This is used to send non-keyworded variable length argument 
            list to custom initialize. args will be parsed and used in custom_init method.
-        #. **kwargs (): This allows passing keyworded variable length of arguments to
+        #. \**kwargs (): This allows passing keyworded variable length of arguments to
            custom_init method. kwargs can be anything other than 'directory' and 
            'filename'.
     
@@ -299,9 +299,9 @@ A valid filename must not contain especial characters or operating system separa
         Preferences instances. 
         
         :Parameters:
-            #. *args (): This is used to send non-keyworded variable length argument 
+            #. \*args (): This is used to send non-keyworded variable length argument 
                list to custom initialize. 
-            #. **kwargs (): This allows passing keyworded variable length of arguments to
+            #. \**kwargs (): This allows passing keyworded variable length of arguments to
                custom_init method. kwargs can be anything other than 'directory' and 
                'filename'.
         """
