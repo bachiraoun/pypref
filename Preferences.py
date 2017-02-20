@@ -24,12 +24,12 @@ This example shows how to use pypref.
         
         # lets get some preferences. This would return the value of the preference if
         # it is defined or default value if it is not.
-        print pref.get('preference 1')
+        print(pref.get('preference 1'))
         
         # In some cases we must use raw strings. This is most likely needed when
         # working with paths in a windows systems or when a preference includes
         # especial characters. That's how to do it ...
-        pref.update_preferences({'my path': " r'C:\Users\Me\Desktop' "})
+        pref.update_preferences({'my path': " r'C:\\Users\\Me\\Desktop' "})
         
         # Sometimes preferences to change dynamically or to be evaluated real time.
         # This also can be done by using dynamic property. In this example password
@@ -42,8 +42,8 @@ This example shows how to use pypref.
         
         # lets pull 'password generator' preferences twice and notice how
         # passwords are different at every pull
-        print pref.get('password generator')
-        print pref.get('password generator')
+        print(pref.get('password generator'))
+        print(pref.get('password generator'))
         
         # those preferences can be accessed later. Let's simulate that by creating
         # another preferences instances which will automatically detect the 
@@ -51,7 +51,7 @@ This example shows how to use pypref.
         newPref = Preferences(filename="preferences_test.py")
         
         # let's print 'my path' preference
-        print newPref.get('my path')
+        print(newPref.get('my path'))
         
         
         
@@ -59,16 +59,31 @@ This example shows how to use pypref.
 Preferences main module:
 ========================
 """
-# standard library imports
+
+## standard library imports
 import sys, os, copy, tempfile
-#from importlib import import_module
+from collections import OrderedDict
 import imp
 import warnings
 
-# pypref package information imports
-from __pkginfo__ import __version__
+## pypref package information imports
+from .__pkginfo__ import __version__
 
-
+# python version dependant imports
+if sys.version_info >= (3, 0):
+    # This is python 3
+    str        = str
+    long       = int
+    unicode    = str
+    bytes      = bytes
+    basestring = str
+else:
+    str        = str
+    unicode    = unicode
+    bytes      = str
+    long       = long
+    basestring = basestring
+    
 class Preferences(object):
     """
     This is pypref main preferences class definition. This class is used to create, load
@@ -241,24 +256,47 @@ A valid filename must not contain especial characters or operating system separa
         lines += "__pypref_version__ = '%s' \n\n"%__version__ 
         lines += "##########################################################################################\n"
         lines += "###################################### PREFERENCES #######################################\n"
-        lines += "preferences = {}" + "\n"
+        if isinstance(preferences, OrderedDict):
+            lines += "from collections import OrderedDict" + "\n"
+            lines += "preferences = OrderedDict()" + "\n"
+        else:
+            lines += "preferences = {}" + "\n"
+        ###### get maximum key length
+        maxLen  = [len(k) for k in preferences.keys()]
+        if len(maxLen):
+            maxLen = max(maxLen)
+        else:
+            maxLen = 0
+        maxLen += len('preferences[""]')
+        # write preferences
         for k, v in preferences.items():
             if isinstance(k, basestring):
                 k = self.__get_normalized_string(k)
             if isinstance(v, basestring):
                 v = self.__get_normalized_string(v)
-            lines += "preferences[%s] = %s\n"%(k, v)
-        # write dynamic
+            lines += ("preferences[%s]"%(k,)).ljust(maxLen) + " = %s\n"%(v,)
+        ###### write dynamic
         lines += "\n"
         lines += "##########################################################################################\n"
         lines += "############################## DYNAMIC PREFERENCES MODULES ###############################\n"
-        lines += "dynamic = {}" + "\n"
+        if isinstance(preferences, OrderedDict):
+            lines += "from collections import OrderedDict" + "\n"
+            lines += "dynamic = OrderedDict()" + "\n"
+        else:
+            lines += "dynamic = {}" + "\n"
+        # get maximum key length
+        maxLen  = [len(k) for k in dynamic.keys()]
+        if len(maxLen):
+            maxLen = max(maxLen)
+        else:
+            maxLen = 0
+        maxLen += len('dynamic[""]')
         for k, v in dynamic.items():
             if isinstance(k, basestring):
                 k = self.__get_normalized_string(k)
             if isinstance(v, basestring):
                 v = self.__get_normalized_string(v)
-            lines += "dynamic[%s] = %s\n"%(k, v)
+            lines += ("dynamic[%s]"%(k,)).ljust(maxLen) + " = %s\n"%(v,)
         # write lines  
         try:     
             fd.write(lines) 
@@ -404,7 +442,7 @@ A valid filename must not contain especial characters or operating system separa
         assert isinstance(dynamic, dict), "dynamic must be a dictionary"
         D = {}
         for k,v in dynamic.items():
-            if not self.__preferences.has_key(k):
+            if not k in self.__preferences:
                 warnings.warn("dynamic key '%s' is discarded as it's not a valid preference"%k)
                 continue
             if v is not None:
