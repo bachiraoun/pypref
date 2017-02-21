@@ -248,7 +248,7 @@ A valid filename must not contain especial characters or operating system separa
         else:
             # try to open preferences file
             try:
-                fd = open(self.fullpath, 'w')
+                fd = open(self.fullpath, 'wb')
             except Exception as e:
                 raise Exception("Unable to open preferences file '%s."%self.fullpath)
         # write preferences
@@ -262,7 +262,7 @@ A valid filename must not contain especial characters or operating system separa
         else:
             lines += "preferences = {}" + "\n"
         ###### get maximum key length
-        maxLen  = [len(k) for k in preferences.keys()]
+        maxLen  = [len(str(k)) for k in preferences.keys()]
         if len(maxLen):
             maxLen = max(maxLen)
         else:
@@ -285,7 +285,7 @@ A valid filename must not contain especial characters or operating system separa
         else:
             lines += "dynamic = {}" + "\n"
         # get maximum key length
-        maxLen  = [len(k) for k in dynamic.keys()]
+        maxLen  = [len(str(k)) for k in dynamic.keys()]
         if len(maxLen):
             maxLen = max(maxLen)
         else:
@@ -297,11 +297,11 @@ A valid filename must not contain especial characters or operating system separa
             if isinstance(v, basestring):
                 v = self.__get_normalized_string(v)
             lines += ("dynamic[%s]"%(k,)).ljust(maxLen) + " = %s\n"%(v,)
-        # write lines  
+        # write lines 
         try:     
-            fd.write(lines) 
+            fd.write( lines.encode('utf-8') )
         except Exception as e:
-            raise Exception("Unable to write preferences to file '%s."%self.fullpath)
+            raise Exception("Unable to write preferences to file '%s'. (%s)."%(self.fullpath, e))
         # close file
         fd.close()
     
@@ -412,6 +412,7 @@ A valid filename must not contain especial characters or operating system separa
         assert isinstance(preferences, dict), "preferences must be a dictionary"
         if dynamic is None:
             # try dumping to temp file first
+            self.__dump_file(preferences=preferences, dynamic=self.__dynamic, temp=True)
             try:
                 self.__dump_file(preferences=preferences, dynamic=self.__dynamic, temp=True)
             except Exception as e:
