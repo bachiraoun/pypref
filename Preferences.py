@@ -84,6 +84,7 @@ else:
     long       = long
     basestring = basestring
     
+    
 class Preferences(object):
     """
     This is pypref main preferences class definition. This class is used to create, load
