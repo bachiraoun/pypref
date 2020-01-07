@@ -13,8 +13,10 @@ PACKAGE_PATH = '.'
 PACKAGE_NAME = 'pypref'
 
 # check python version
-if sys.version_info[:2] < (2, 6):
-    raise RuntimeError("Python version 2.6.x, 2.7.x required.")
+major, minor = sys.version_info[:2]
+if major==2 and minor!=7:
+    raise RuntimeError("Python version 2.7.x or >=3.x is required.")
+
 
 # automatically create MANIFEST.in
 commands = [# include MANIFEST.in
@@ -23,7 +25,7 @@ commands = [# include MANIFEST.in
             # exclude all .log files
             '\n# exclude all logs',
             'global-exclude *.log',
-            # exclude all other non necessary files 
+            # exclude all other non necessary files
             '\n# exclude all other non necessary files ',
             'global-exclude .project',
             'global-exclude .pydevproject',
@@ -39,7 +41,7 @@ commands = [# include MANIFEST.in
             # include all README files
             '\n# include all readme files found',
             'global-include ./*README.*',
-            'global-include ./*readme.*']         
+            'global-include ./*readme.*']
 with open('MANIFEST.in','w') as fd:
     for l in commands:
         fd.write(l)
@@ -64,7 +66,7 @@ Operating System :: POSIX
 Operating System :: Unix
 Operating System :: MacOS
 """
-# create descriptions  
+# create descriptions
 LONG_DESCRIPTION = ["PYthon PREFrences or pypref is a python implementation to creating ",
                     "application's configuration, preferences or settings file and dynamically ",
                     "interacting, updating and pulling them. Most applications have default preferences ",
@@ -75,21 +77,18 @@ LONG_DESCRIPTION = ["PYthon PREFrences or pypref is a python implementation to c
                     "In addition, pypref allows creating dynamic preferences that will be evaluated real ",
                     "time. This becomes handy in plethora of applications for authentication, automatic ",
                     "key generation, etc. "]
-DESCRIPTION      = LONG_DESCRIPTION[:4] 
+DESCRIPTION      = LONG_DESCRIPTION[:4]
 
 
-# get package info
-PACKAGE_INFO={}
-ver_path = convert_path('__init__.py')
-with open(ver_path) as ver_file:
-    exec(ver_file.read(), PACKAGE_INFO)
+## get package info
+from pypref import __version__
 
 
 # create meta data
 metadata = dict(name = PACKAGE_NAME,
                 packages=[PACKAGE_NAME],
                 package_dir={PACKAGE_NAME: '.'},
-                version= PACKAGE_INFO['__version__'] ,
+                version= __version__,
                 author="Bachir AOUN",
                 author_email="bachir.aoun@e-aoun.com",
                 description = ''.join(DESCRIPTION),
@@ -99,8 +98,6 @@ metadata = dict(name = PACKAGE_NAME,
                 license = 'GNU',
                 classifiers=[_f for _f in CLASSIFIERS.split('\n') if _f],
                 platforms = ["Windows", "Linux", "Mac OS-X", "Unix"], )
-                
-# setup              
+
+# setup
 setup(**metadata)
-
-
