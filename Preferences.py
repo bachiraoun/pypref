@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Usage:
 ======
@@ -179,7 +180,7 @@ class Preferences(object):
         if not os.path.exists(directory):
             os.makedirs( directory )
         # check if a directory is writable
-        try: 
+        try:
             testfile = tempfile.TemporaryFile(dir = directory)
             testfile.close()
         except Exception as e:
