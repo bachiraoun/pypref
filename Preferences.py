@@ -62,7 +62,7 @@ Preferences main module:
 """
 
 ## standard library imports
-import sys, os, copy, tempfile
+import sys, os, re, copy, tempfile
 from collections import OrderedDict
 import imp
 import warnings
@@ -85,6 +85,10 @@ else:
     long       = long
     basestring = basestring
 
+def _normalize_path(path):
+    if os.sep=='\\':
+        path = re.sub(r'([\\])\1+', r'\1', path).replace('\\','\\\\')
+    return path
 
 class Preferences(object):
     """
@@ -186,7 +190,7 @@ class Preferences(object):
         except Exception as e:
             raise Exception("Given directory '%s' is not a writable directory."%directory)
         # set directory
-        self.__directory = directory
+        self.__directory = _normalize_path(directory)#directory
 
     def __set_filename(self, filename):
         assert isinstance(filename, basestring), "filename must be a string, '%s' is given."%filename
@@ -196,7 +200,7 @@ A valid filename must not contain especial characters or operating system separa
         if not filename.endswith('.py'):
             filename += '.py'
             warnings.warn("'.py' appended to given filename '%s'"%filename)
-        self.__filename = filename
+        self.__filename = _normalize_path(filename)#filename
 
     def __load_or_create(self):
         fullpath     = self.fullpath
@@ -325,7 +329,7 @@ A valid filename must not contain especial characters or operating system separa
     @property
     def fullpath(self):
         """Preferences file full path."""
-        return os.path.join(self.__directory, self.__filename)
+        return _normalize_path( os.path.join(self.__directory, self.__filename) )
 
     @property
     def preferences(self):
