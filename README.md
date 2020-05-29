@@ -9,8 +9,8 @@ application's preferences more desirable.
 
 Installation
 ============
-##### fullrmc requires:
-* Python (>= 2.7 and < 3),
+##### pypref requires:
+* Python (>= 2.7 and >= 3),
 
 ##### Installation using pip:
 ```bash
