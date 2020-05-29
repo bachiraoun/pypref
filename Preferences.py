@@ -204,11 +204,7 @@ A valid filename must not contain especial characters or operating system separa
 
     def __load_or_create(self):
         fullpath     = self.fullpath
-        (path, name) = os.path.split(fullpath)
-        (name, ext)  = os.path.splitext(name)
         exists       = os.path.isfile(fullpath) # this is not case sensitive !!!
-        if exists:
-            exists = name in os.listdir(path)
         if exists:
             (path, name) = os.path.split(fullpath) # to use imp instead of importlib
             (name, ext)  = os.path.splitext(name)  # to use imp instead of importlib
