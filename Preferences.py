@@ -7,6 +7,7 @@ This example shows how to use pypref.
 
 .. code-block:: python
 
+        from __future__ import print_function
         from pypref import Preferences
 
         #  create preferences instance
@@ -60,8 +61,8 @@ This example shows how to use pypref.
 Preferences main module:
 ========================
 """
-
 ## standard library imports
+from __future__ import print_function
 import sys, os, re, copy, tempfile
 from collections import OrderedDict
 import imp
