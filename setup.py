@@ -102,7 +102,9 @@ metadata = dict(name = PACKAGE_NAME,
                 download_url = "https://github.com/bachiraoun/pypref",
                 license = 'GNU',
                 classifiers=[_f for _f in CLASSIFIERS.split('\n') if _f],
-                platforms = ["Windows", "Linux", "Mac OS-X", "Unix"], )
+                platforms = ["Windows", "Linux", "Mac OS-X", "Unix"],
+                test_suite="tests",
+)
 
 # setup
 setup(**metadata)
