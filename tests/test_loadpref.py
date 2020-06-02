@@ -1,16 +1,18 @@
+# -*- coding: utf-8 -*-
+
 import unittest
-import tempfile
-from pypref import SinglePreferences as Preferences
+from pypref import Preferences
+from .fixtures import TemporaryDirectory
 
 class TestPreferencesMethods(unittest.TestCase):
 
     def setUp(self):
-        self.d = tempfile.TemporaryDirectory()
+        self.d = TemporaryDirectory()
         p = Preferences(directory=self.d.name)
         p.set_preferences({'preset' : True})
-        del p
 
     def test_loadexistingpref(self):
+        """test persistence of preferences file"""
         p = Preferences(directory=self.d.name)
         self.assertTrue(p.get('preset',False))
 

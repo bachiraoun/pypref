@@ -33,6 +33,13 @@ This example shows how to use pypref.
         # especial characters. That's how to do it ...
         pref.update_preferences({'my path': " r'C:\\Users\\Me\\Desktop' "})
 
+        # multi-line strings can also be used as values
+        multiline=\"\"\"this is a
+        multi-line
+        value
+        \"\"\"
+        pref.set_preferences({'preference 2', multiline})
+
         # Sometimes preferences to change dynamically or to be evaluated real time.
         # This also can be done by using dynamic property. In this example password
         # generator preference is set using uuid module. dynamic dictionary
@@ -241,7 +248,9 @@ A valid filename must not contain especial characters or operating system separa
         stripped = s.strip()
         if not stripped.startswith('"') and not stripped.endswith('"'):
             if not stripped.startswith("'") and not stripped.endswith("'"):
-                if "'" in s:
+                if s.find('\n')>=0: # we have a multi-line string
+                    s = '"""%s"""'%s
+                elif "'" in s:
                     s = '"%s"'%s
                 else:
                     s = "'%s'"%s
