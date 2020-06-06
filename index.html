@@ -1,107 +1,99 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Welcome to pypref V. 2.0.0 documentation! &#8212; PYthon PREFerences package. pypref v2.0.0</title>
-    
+    <meta charset="utf-8" />
+    <title>Welcome to pypref V. 3.1.0 documentation! &#8212; PYthon PREFerences package. pypref v3.1.0</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '2.0.0',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PYthon PREFerences package. pypref v2.0.0" href="#" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head>
-  <body role="document">
+  </head><body>
   
 
     <div class="document">
       <div class="documentwrapper">
+          
+
           <div class="body" role="main">
             
   <div class="section" id="module-pypref">
-<span id="welcome-to-pypref-v-version-documentation"></span><h1>Welcome to pypref V. 2.0.0 documentation!<a class="headerlink" href="#module-pypref" title="Permalink to this headline">¶</a></h1>
-<p>PYthon PREFrences or pypref is a python implementation to creating application&#8217;s 
+<span id="welcome-to-pypref-v-version-documentation"></span><h1>Welcome to pypref V. 3.1.0 documentation!<a class="headerlink" href="#module-pypref" title="Permalink to this headline">¶</a></h1>
+<p>PYthon PREFrences or pypref is a python implementation to creating application’s 
 configuration, preferences or settings file and dynamically interacting, updating and 
 pulling them. Most applications have default preferences and in general those are
 created and stored in a text file (.ini, xml, json, etc). At some point preferences 
 are pulled and updated by the application and/or users.
 pypref is especially designed to take care of this task automatically and make 
-programming application&#8217;s preferences more desirable. 
+programming application’s preferences more desirable. 
 In addition, pypref allows creating dynamic preferences that will be evaluated real
 time. This becomes handy in plethora of applications for authentication, automatic 
 key generation, etc.</p>
 <div class="section" id="installation-guide">
 <h2>Installation guide:<a class="headerlink" href="#installation-guide" title="Permalink to this headline">¶</a></h2>
 <p>pypref is a pure python 2.7.x module that needs no particular installation. One can either 
-fork pypref&#8217;s <a class="reference external" href="https://github.com/bachiraoun/pypref/">github repository</a> and copy the 
-package to python&#8217;s site-packages or use pip as the following:</p>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">pip install pypref</span>
+fork pypref’s <a class="reference external" href="https://github.com/bachiraoun/pypref/">github repository</a> and copy the 
+package to python’s site-packages or use pip as the following:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">pip install pypref</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="package-functions">
 <h2>Package Functions:<a class="headerlink" href="#package-functions" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
+<dl class="py function">
 <dt id="pypref.get_version">
-<code class="descclassname">pypref.</code><code class="descname">get_version</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pypref.get_version" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get pypref&#8217;s version number.</p>
+<code class="sig-prename descclassname">pypref.</code><code class="sig-name descname">get_version</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pypref.get_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get pypref’s version number.</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="pypref.get_author">
-<code class="descclassname">pypref.</code><code class="descname">get_author</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pypref.get_author" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get pypref&#8217;s author&#8217;s name.</p>
+<code class="sig-prename descclassname">pypref.</code><code class="sig-name descname">get_author</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pypref.get_author" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get pypref’s author’s name.</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="pypref.get_email">
-<code class="descclassname">pypref.</code><code class="descname">get_email</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pypref.get_email" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get pypref&#8217;s author&#8217;s email.</p>
+<code class="sig-prename descclassname">pypref.</code><code class="sig-name descname">get_email</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pypref.get_email" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get pypref’s author’s email.</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="pypref.get_doc">
-<code class="descclassname">pypref.</code><code class="descname">get_doc</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pypref.get_doc" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get pypref&#8217;s official online documentation link.</p>
+<code class="sig-prename descclassname">pypref.</code><code class="sig-name descname">get_doc</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pypref.get_doc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get pypref’s official online documentation link.</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="pypref.get_repository">
-<code class="descclassname">pypref.</code><code class="descname">get_repository</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pypref.get_repository" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get pypref&#8217;s official online repository link.</p>
+<code class="sig-prename descclassname">pypref.</code><code class="sig-name descname">get_repository</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pypref.get_repository" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get pypref’s official online repository link.</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="pypref.get_pypi">
-<code class="descclassname">pypref.</code><code class="descname">get_pypi</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pypref.get_pypi" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get pypref pypi&#8217;s link.</p>
+<code class="sig-prename descclassname">pypref.</code><code class="sig-name descname">get_pypi</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pypref.get_pypi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get pypref pypi’s link.</p>
 </dd></dl>
 
 </div>
 <div class="section" id="usage">
 <h2>Usage:<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
 <p>This example shows how to use pypref.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pypref</span> <span class="kn">import</span> <span class="n">Preferences</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
+<span class="kn">from</span> <span class="nn">pypref</span> <span class="kn">import</span> <span class="n">Preferences</span>
 
 <span class="c1">#  create preferences instance</span>
 <span class="n">pref</span> <span class="o">=</span> <span class="n">Preferences</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s2">&quot;preferences_test.py&quot;</span><span class="p">)</span>
@@ -109,22 +101,29 @@ package to python&#8217;s site-packages or use pip as the following:</p>
 <span class="c1"># create preferences dict example</span>
 <span class="n">pdict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;preference 1&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">12345</span><span class="p">:</span> <span class="s1">&#39;I am a number&#39;</span><span class="p">}</span>
 
-<span class="c1"># set preferences. This would automatically create preferences_test.py </span>
+<span class="c1"># set preferences. This would automatically create preferences_test.py</span>
 <span class="c1"># in your home directory. Go and check it.</span>
 <span class="n">pref</span><span class="o">.</span><span class="n">set_preferences</span><span class="p">(</span><span class="n">pdict</span><span class="p">)</span>
 
-<span class="c1"># lets update the preferences. This would automatically update </span>
-<span class="c1"># preferences_test.py file, you can verify that. </span>
+<span class="c1"># lets update the preferences. This would automatically update</span>
+<span class="c1"># preferences_test.py file, you can verify that.</span>
 <span class="n">pref</span><span class="o">.</span><span class="n">update_preferences</span><span class="p">({</span><span class="s1">&#39;preference 1&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">})</span>
 
 <span class="c1"># lets get some preferences. This would return the value of the preference if</span>
 <span class="c1"># it is defined or default value if it is not.</span>
-<span class="k">print</span> <span class="n">pref</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;preference 1&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pref</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;preference 1&#39;</span><span class="p">))</span>
 
 <span class="c1"># In some cases we must use raw strings. This is most likely needed when</span>
 <span class="c1"># working with paths in a windows systems or when a preference includes</span>
 <span class="c1"># especial characters. That&#39;s how to do it ...</span>
-<span class="n">pref</span><span class="o">.</span><span class="n">update_preferences</span><span class="p">({</span><span class="s1">&#39;my path&#39;</span><span class="p">:</span> <span class="s2">&quot; r&#39;C:\Users\Me\Desktop&#39; &quot;</span><span class="p">})</span>
+<span class="n">pref</span><span class="o">.</span><span class="n">update_preferences</span><span class="p">({</span><span class="s1">&#39;my path&#39;</span><span class="p">:</span> <span class="s1">&#39;C:</span><span class="se">\\</span><span class="s1">Users</span><span class="se">\\</span><span class="s1">Me</span><span class="se">\\</span><span class="s1">Desktop&#39;</span><span class="p">})</span>
+
+<span class="c1"># multi-line strings can also be used as values</span>
+<span class="n">multiline</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;this is a</span>
+<span class="s2">multi-line</span>
+<span class="s2">value</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">pref</span><span class="o">.</span><span class="n">update_preferences</span><span class="p">({</span><span class="s1">&#39;multiline preference&#39;</span><span class="p">:</span> <span class="n">multiline</span><span class="p">})</span>
 
 <span class="c1"># Sometimes preferences to change dynamically or to be evaluated real time.</span>
 <span class="c1"># This also can be done by using dynamic property. In this example password</span>
@@ -137,39 +136,40 @@ package to python&#8217;s site-packages or use pip as the following:</p>
 
 <span class="c1"># lets pull &#39;password generator&#39; preferences twice and notice how</span>
 <span class="c1"># passwords are different at every pull</span>
-<span class="k">print</span> <span class="n">pref</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;password generator&#39;</span><span class="p">)</span>
-<span class="k">print</span> <span class="n">pref</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;password generator&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pref</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;password generator&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pref</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;password generator&#39;</span><span class="p">))</span>
 
 <span class="c1"># those preferences can be accessed later. Let&#39;s simulate that by creating</span>
-<span class="c1"># another preferences instances which will automatically detect the </span>
+<span class="c1"># another preferences instances which will automatically detect the</span>
 <span class="c1"># existance of a preferences file and connect to it</span>
 <span class="n">newPref</span> <span class="o">=</span> <span class="n">Preferences</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s2">&quot;preferences_test.py&quot;</span><span class="p">)</span>
 
 <span class="c1"># let&#39;s print &#39;my path&#39; preference</span>
-<span class="k">print</span> <span class="n">newPref</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;my path&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">newPref</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;my path&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">newPref</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;multiline preference&#39;</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="preferences-main-module">
 <h2>Preferences main module:<a class="headerlink" href="#preferences-main-module" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
+<dl class="py class">
 <dt>
-<em class="property">class </em><code class="descclassname">pypref.Preferences.</code><code class="descname">Preferences</code><span class="sig-paren">(</span><em>directory=None</em>, <em>filename='preferences.py'</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<em class="property">class </em><code class="sig-prename descclassname">pypref.Preferences.</code><code class="sig-name descname">Preferences</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">directory</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">filename</span><span class="o">=</span><span class="default_value">'preferences.py'</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>This is pypref main preferences class definition. This class is used to create, load
-and update application&#8217;s preferences dictionary in memory and in file.
+and update application’s preferences dictionary in memory and in file.
 At initialization, a preferences dictionary will be pulled from the given directory
 and filename if existing. Otherwise, preferences file will be created and preferences
-dictionary will be initialized to an empty dictionary. Preferences can be accessed 
+dictionary will be initialized to an empty dictionary. Preferences can be accessed
 like any python dictionary by slicing a key preference [key] or by using get method.</p>
-<p>When used in a python application, it is advisable to use Preferences singleton 
+<p>When used in a python application, it is advisable to use Preferences singleton
 implementation and not Preferences itself.
 if no overloading is needed one can simply import the singleton as the following:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pypref</span> <span class="kn">import</span> <span class="n">SinglePreferences</span> <span class="k">as</span> <span class="n">Preferences</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pypref</span> <span class="kn">import</span> <span class="n">SinglePreferences</span> <span class="k">as</span> <span class="n">Preferences</span>
 </pre></div>
 </div>
 <p>Recommended overloading implementation, this is how it could be done:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pypref</span> <span class="kn">import</span> <span class="n">SinglePreferences</span> <span class="k">as</span> <span class="n">PREF</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pypref</span> <span class="kn">import</span> <span class="n">SinglePreferences</span> <span class="k">as</span> <span class="n">PREF</span>
 
 <span class="k">class</span> <span class="nc">Preferences</span><span class="p">(</span><span class="n">PREF</span><span class="p">):</span>
     <span class="c1"># *args and **kwargs can be replace by fixed arguments</span>
@@ -178,207 +178,179 @@ if no overloading is needed one can simply import the singleton as the following
 </pre></div>
 </div>
 <p>In case overloading __init__ is needed, this is how it could be done:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pypref</span> <span class="kn">import</span> <span class="n">SinglePreferences</span> <span class="k">as</span> <span class="n">PREF</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pypref</span> <span class="kn">import</span> <span class="n">SinglePreferences</span> <span class="k">as</span> <span class="n">PREF</span>
 
 <span class="k">class</span> <span class="nc">Preferences</span><span class="p">(</span><span class="n">PREF</span><span class="p">):</span>
     <span class="c1"># custom_init will still be called in super(Preferences, self).__init__(*args, **kwargs)</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_isInitialized</span><span class="p">:</span> <span class="k">return</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">Preferences</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Preferences</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="c1"># hereinafter any further instanciation can be coded</span>
 </pre></div>
 </div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ol class="first last arabic simple">
-<li>directory (None, path): The directory where to create preferences file.
-If None is given, preferences will be create in user&#8217;s home directory.</li>
-<li>filename (string): The preferences file name.</li>
-<li>*args (): This is used to send non-keyworded variable length argument 
-list to custom initialize. args will be parsed and used in custom_init method.</li>
-<li>**kwargs (): This allows passing keyworded variable length of arguments to
-custom_init method. kwargs can be anything other than &#8216;directory&#8217; and 
-&#8216;filename&#8217;.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ol class="arabic simple">
+<li><p>directory (None, path): The directory where to create preferences file.
+If None is given, preferences will be create in user’s home directory.</p></li>
+<li><p>filename (string): The preferences file name.</p></li>
+<li><p>*args (): This is used to send non-keyworded variable length argument
+list to custom initialize. args will be parsed and used in custom_init method.</p></li>
+<li><p>**kwargs (): This allows passing keyworded variable length of arguments to
+custom_init method. kwargs can be anything other than ‘directory’ and
+‘filename’.</p></li>
 </ol>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <p><strong>N.B. args and kwargs are not used by __init__ method but passed to custom_init
 at the end of initialization. custom_init method is an empty method that can be
 overloaded</strong></p>
-<dl class="attribute">
+<dl class="py method">
 <dt>
-<code class="descname">directory</code></dt>
+<em class="property">property </em><code class="sig-name descname">directory</code></dt>
 <dd><p>Preferences file directory.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py method">
 <dt>
-<code class="descname">filename</code></dt>
+<em class="property">property </em><code class="sig-name descname">filename</code></dt>
 <dd><p>Preferences file name.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py method">
 <dt>
-<code class="descname">fullpath</code></dt>
+<em class="property">property </em><code class="sig-name descname">fullpath</code></dt>
 <dd><p>Preferences file full path.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py method">
 <dt>
-<code class="descname">preferences</code></dt>
+<em class="property">property </em><code class="sig-name descname">preferences</code></dt>
 <dd><p>Preferences dictionary copy.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py method">
 <dt>
-<code class="descname">dynamic</code></dt>
+<em class="property">property </em><code class="sig-name descname">dynamic</code></dt>
 <dd><p>Dynamic dictionary copy.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt>
-<code class="descname">custom_init</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span></dt>
-<dd><p>Custom initialize abstract method. This method will be called  at the end of 
-initialzation. This method needs to be overloaded to custom initialize 
+<code class="sig-name descname">custom_init</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span></dt>
+<dd><p>Custom initialize abstract method. This method will be called  at the end of
+initialzation. This method needs to be overloaded to custom initialize
 Preferences instances.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ol class="first last arabic simple">
-<li>*args (): This is used to send non-keyworded variable length argument 
-list to custom initialize.</li>
-<li>**kwargs (): This allows passing keyworded variable length of arguments to
-custom_init method. kwargs can be anything other than &#8216;directory&#8217; and 
-&#8216;filename&#8217;.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ol class="arabic simple">
+<li><p>*args (): This is used to send non-keyworded variable length argument
+list to custom initialize.</p></li>
+<li><p>**kwargs (): This allows passing keyworded variable length of arguments to
+custom_init method. kwargs can be anything other than ‘directory’ and
+‘filename’.</p></li>
 </ol>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt>
-<code class="descname">get</code><span class="sig-paren">(</span><em>key</em>, <em>default=None</em><span class="sig-paren">)</span></dt>
-<dd><p>Get the preferences value for the given key. 
+<code class="sig-name descname">get</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">key</span></em>, <em class="sig-param"><span class="n">default</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span></dt>
+<dd><p>Get the preferences value for the given key.
 If key is not available then returns then given default value.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ol class="first arabic simple">
-<li>key (object): The Key to be searched in the preferences.</li>
-<li>default (object): The Value to be returned in case key does not exist.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ol class="arabic simple">
+<li><p>key (object): The Key to be searched in the preferences.</p></li>
+<li><p>default (object): The Value to be returned in case key does not exist.</p></li>
 </ol>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><ol class="first last arabic simple">
-<li>value (object): The value of the given key or given default value is 
-key does not exist.</li>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><ol class="arabic simple">
+<li><p>value (object): The value of the given key or given default value is
+key does not exist.</p></li>
 </ol>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt>
-<code class="descname">check_preferences</code><span class="sig-paren">(</span><em>preferences</em><span class="sig-paren">)</span></dt>
-<dd><p>This is an abstract method to be overloaded if needed. 
+<code class="sig-name descname">check_preferences</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">preferences</span></em><span class="sig-paren">)</span></dt>
+<dd><p>This is an abstract method to be overloaded if needed.
 All preferences setters such as set_preferences and update_preferences
-call check_preferences prior to setting anything. This method returns 
-a check flag and a message, if the flag is False, the message is raised 
+call check_preferences prior to setting anything. This method returns
+a check flag and a message, if the flag is False, the message is raised
 as an error like the following:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">flag</span><span class="p">,</span> <span class="n">m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_preferences</span><span class="p">(</span><span class="n">preferences</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">flag</span><span class="p">,</span> <span class="n">m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_preferences</span><span class="p">(</span><span class="n">preferences</span><span class="p">)</span>
 <span class="k">assert</span> <span class="n">flag</span><span class="p">,</span> <span class="n">m</span>
 </pre></div>
 </div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ol class="first arabic simple">
-<li>preferences (dictionary): The preferences dictionary.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ol class="arabic simple">
+<li><p>preferences (dictionary): The preferences dictionary.</p></li>
 </ol>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><ol class="first last arabic simple">
-<li>flag (boolean): The check flag.</li>
-<li>message (string): The error message to raise.</li>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><ol class="arabic simple">
+<li><p>flag (boolean): The check flag.</p></li>
+<li><p>message (string): The error message to raise.</p></li>
 </ol>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt>
-<code class="descname">set_preferences</code><span class="sig-paren">(</span><em>preferences</em>, <em>dynamic=None</em><span class="sig-paren">)</span></dt>
+<code class="sig-name descname">set_preferences</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">preferences</span></em>, <em class="sig-param"><span class="n">dynamic</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span></dt>
 <dd><p>Set preferences and write preferences file by erasing any existing one.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ol class="first last arabic simple">
-<li>preferences (dictionary): The preferences dictionary.</li>
-<li>dynamic (None, dictionary): The dynamic dictionary. If None dynamic 
-dictionary won&#8217;t be updated.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ol class="arabic simple">
+<li><p>preferences (dictionary): The preferences dictionary.</p></li>
+<li><p>dynamic (None, dictionary): The dynamic dictionary. If None dynamic
+dictionary won’t be updated.</p></li>
 </ol>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt>
-<code class="descname">set_dynamic</code><span class="sig-paren">(</span><em>dynamic</em><span class="sig-paren">)</span></dt>
+<code class="sig-name descname">set_dynamic</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dynamic</span></em><span class="sig-paren">)</span></dt>
 <dd><p>Set dynamic and write preferences file by erasing any existing one.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ol class="first last arabic simple">
-<li>dynamic (dictionary): The dynamic dictionary.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ol class="arabic simple">
+<li><p>dynamic (dictionary): The dynamic dictionary.</p></li>
 </ol>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt>
-<code class="descname">update_preferences</code><span class="sig-paren">(</span><em>preferences</em>, <em>dynamic=None</em><span class="sig-paren">)</span></dt>
+<code class="sig-name descname">update_preferences</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">preferences</span></em>, <em class="sig-param"><span class="n">dynamic</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span></dt>
 <dd><p>Update preferences and dynamic dictionaries and update preferences file.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ol class="first last arabic simple">
-<li>preferences (dictionary): The preferences dictionary.</li>
-<li>dynamic (dictionary): The dynamic dictionary. If None is given, dynamic
-dictionary won&#8217;t get updated</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ol class="arabic simple">
+<li><p>preferences (dictionary): The preferences dictionary.</p></li>
+<li><p>dynamic (dictionary): The dynamic dictionary. If None is given, dynamic
+dictionary won’t get updated</p></li>
 </ol>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt>
-<em class="property">class </em><code class="descclassname">pypref.Preferences.</code><code class="descname">SinglePreferences</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">pypref.Preferences.Preferences</span></code></p>
+<em class="property">class </em><code class="sig-prename descclassname">pypref.Preferences.</code><code class="sig-name descname">SinglePreferences</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pypref.Preferences.Preferences</span></code></p>
 <p>This is singleton implementation of Preferences class.</p>
 </dd></dl>
 
@@ -387,6 +359,7 @@ dictionary won&#8217;t get updated</li>
 
 
           </div>
+          
       </div>
       <div class="clearer"></div>
     </div>
