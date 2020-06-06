@@ -31,14 +31,14 @@ This example shows how to use pypref.
         # In some cases we must use raw strings. This is most likely needed when
         # working with paths in a windows systems or when a preference includes
         # especial characters. That's how to do it ...
-        pref.update_preferences({'my path': " r'C:\\Users\\Me\\Desktop' "})
+        pref.update_preferences({'my path': 'C:\\\\Users\\\\Me\\\\Desktop'})
 
         # multi-line strings can also be used as values
         multiline=\"\"\"this is a
         multi-line
         value
         \"\"\"
-        pref.set_preferences({'preference 2', multiline})
+        pref.update_preferences({'multiline preference': multiline})
 
         # Sometimes preferences to change dynamically or to be evaluated real time.
         # This also can be done by using dynamic property. In this example password
@@ -61,6 +61,8 @@ This example shows how to use pypref.
 
         # let's print 'my path' preference
         print(newPref.get('my path'))
+        print(newPref.get('multiline preference'))
+
 
 
 
@@ -245,16 +247,17 @@ A valid filename must not contain especial characters or operating system separa
             self.__dynamic     = {}
 
     def __get_normalized_string(self, s):
-        stripped = s.strip()
-        if not stripped.startswith('"') and not stripped.endswith('"'):
-            if not stripped.startswith("'") and not stripped.endswith("'"):
-                if s.find('\n')>=0: # we have a multi-line string
-                    s = '"""%s"""'%s
-                elif "'" in s:
-                    s = '"%s"'%s
-                else:
-                    s = "'%s'"%s
-        return s
+        return str(repr(s))
+        #stripped = s.strip()
+        #if not stripped.startswith('"') and not stripped.endswith('"'):
+        #    if not stripped.startswith("'") and not stripped.endswith("'"):
+        #        if s.find('\n')>=0: # we have a multi-line string
+        #            s = '"""%s"""'%s
+        #        elif "'" in s:
+        #            s = '"%s"'%s
+        #        else:
+        #            s = "'%s'"%s
+        #return s
 
     def __dump_file(self, preferences, dynamic, temp=False):
         if temp:
