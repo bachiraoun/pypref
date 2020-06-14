@@ -170,6 +170,8 @@ class Preferences(object):
         # custom initialize
         self.custom_init( *args, **kwargs )
 
+    def __str__(self):
+        return self.__get_lines(preferences=self.__preferences, dynamic=self.__dynamic)
 
     def __getitem__(self, key):
         pref = dict.__getitem__(self.__preferences, key)
@@ -425,7 +427,7 @@ A valid filename must not contain especial characters or operating system separa
         if dynamic is None:
             newDynamic = self.__dynamic
         else:
-            assert isinstance(dynamic, dict), "dynamic must be a dictionary"
+            assert isinstance(dynamic, dict), "dynamic must be None or a dictionary"
             newDynamic  = copy.deepcopy(self.__dynamic)
             for p in dynamic:
                 if p not in newDynamic:
@@ -437,12 +439,53 @@ A valid filename must not contain especial characters or operating system separa
         else:
             flag, m = self.check_preferences(preferences)
             assert flag, m
-            assert isinstance(preferences, dict), "preferences must be a dictionary"
+            assert isinstance(preferences, dict), "preferences must be None or a dictionary"
             newPreferences = copy.deepcopy(self.__preferences)
             for p in preferences:
                 if p not in newPreferences:
                     reset = True
                     newPreferences[p] = preferences[p]
+        # set preferences
+        if reset:
+            self.set_preferences(preferences=newPreferences, dynamic=newDynamic)
+
+
+    def update_preferences(self, preferences, dynamic=None):
+        """
+        Add and update preferences with the given ones
+
+        :Parameters:
+            #. preferences (None, dictionary): The preferences dictionary.
+               If None dynamic dictionary won't be updated.
+            #. dynamic (None, dictionary): The dynamic dictionary. If None dynamic
+               dictionary won't be updated.
+        """
+        assert preferences is not None or dynamic is not None, "Both preferences and dynamic can't be None"
+        reset = False
+        # check dynamic
+        if dynamic is None:
+            newDynamic = self.__dynamic
+        else:
+            assert isinstance(dynamic, dict), "dynamic must be None or a dictionary"
+            newDynamic  = copy.deepcopy(self.__dynamic)
+            for p in dynamic:
+                v = dynamic[p]
+                if p not in newDynamic or newDynamic.get(p,None)!=v:
+                    reset = True
+                    newDynamic[p] = v
+        # check prefererences
+        if preferences is None:
+            newPreferences = self.__preferences
+        else:
+            flag, m = self.check_preferences(preferences)
+            assert flag, m
+            assert isinstance(preferences, dict), "preferences must be None or a dictionary"
+            newPreferences = copy.deepcopy(self.__preferences)
+            for p in preferences:
+                v = preferences[p]
+                if p not in newPreferences or newPreferences.get(p,None)!=v:
+                    reset = True
+                    newPreferences[p] = v
         # set preferences
         if reset:
             self.set_preferences(preferences=newPreferences, dynamic=newDynamic)
@@ -518,27 +561,24 @@ A valid filename must not contain especial characters or operating system separa
         # set dynamic preferences
         self.__dynamic = dynamic
 
-    def update_preferences(self, preferences, dynamic=None):
+    def reload(self, raiseError=False):
         """
-        Update preferences and dynamic dictionaries and update preferences file.
+        reload preferences from file
 
         :Parameters:
-            #. preferences (dictionary): The preferences dictionary.
-            #. dynamic (dictionary): The dynamic dictionary. If None is given, dynamic
-               dictionary won't get updated
+            #. raiseError (bool): whether to raise error if any occured
         """
-        flag, m = self.check_preferences(preferences)
-        assert flag, m
-        assert isinstance(preferences, dict), "preferences must be a dictionary"
-        newPreferences = self.preferences
-        newPreferences.update(preferences)
-        if dynamic is not None:
-            assert isinstance(dynamic, dict), "dynamic must be a dictionary"
-            dyn = self.dynamic
-            dyn.update(dynamic)
-            dynamic = dyn
-        # set new preferences
-        self.set_preferences(newPreferences, dynamic=dynamic)
+        assert isinstance(raiseError, bool), "raiseError must be boolean"
+        try:
+            oldPreferences = self.__preferences
+            oldDynamic     = self.__dynamic
+            self.__load_or_create()
+        except Exception as err:
+            self.__preferences = oldPreferences
+            self.__dynamic     = oldDynamic
+            if raiseError:
+                raise Exception("Unable to reload preferences (%s)"%err)
+
 
 
 
