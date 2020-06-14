@@ -250,21 +250,11 @@ A valid filename must not contain especial characters or operating system separa
 
     def __get_normalized_string(self, s):
         return str(repr(s))
-        #stripped = s.strip()
-        #if not stripped.startswith('"') and not stripped.endswith('"'):
-        #    if not stripped.startswith("'") and not stripped.endswith("'"):
-        #        if s.find('\n')>=0: # we have a multi-line string
-        #            s = '"""%s"""'%s
-        #        elif "'" in s:
-        #            s = '"%s"'%s
-        #        else:
-        #            s = "'%s'"%s
-        #return s
 
     def __get_lines(self, preferences, dynamic):
         # write preferences
         lines  = "# This file is an automatically generated pypref preferences file. \n\n"
-        lines += "__pypref_version__ = '%s' \n\n"%__version__
+        lines += "__pypref_version__ = '%s' \n\n"%(__version__,)
         lines += "##########################################################################################\n"
         lines += "###################################### PREFERENCES #######################################\n"
         if isinstance(preferences, OrderedDict):
@@ -418,6 +408,45 @@ A valid filename must not contain especial characters or operating system separa
 
         """
         return True, ""
+
+    def set_default(self, preferences, dynamic=None):
+        """
+        Add preferences if not defined otherwise no action is executed
+
+        :Parameters:
+            #. preferences (None, dictionary): The preferences dictionary.
+               If None dynamic dictionary won't be updated.
+            #. dynamic (None, dictionary): The dynamic dictionary. If None dynamic
+               dictionary won't be updated.
+        """
+        assert preferences is not None or dynamic is not None, "Both preferences and dynamic can't be None"
+        reset = False
+        # check dynamic
+        if dynamic is None:
+            newDynamic = self.__dynamic
+        else:
+            assert isinstance(dynamic, dict), "dynamic must be a dictionary"
+            newDynamic  = copy.deepcopy(self.__dynamic)
+            for p in dynamic:
+                if p not in newDynamic:
+                    reset = True
+                    newDynamic[p] = dynamic[p]
+        # check prefererences
+        if preferences is None:
+            newPreferences = self.__preferences
+        else:
+            flag, m = self.check_preferences(preferences)
+            assert flag, m
+            assert isinstance(preferences, dict), "preferences must be a dictionary"
+            newPreferences = copy.deepcopy(self.__preferences)
+            for p in preferences:
+                if p not in newPreferences:
+                    reset = True
+                    newPreferences[p] = preferences[p]
+        # set preferences
+        if reset:
+            self.set_preferences(preferences=newPreferences, dynamic=newDynamic)
+
 
     def set_preferences(self, preferences, dynamic=None):
         """
