@@ -221,10 +221,12 @@ A valid filename must not contain especial characters or operating system separa
             (file, filename, data) = imp.find_module(name, [path]) # to use imp instead of importlib
             # try to import as python module
             try:
-                #mod = import_module(fullpath)
                 mod = imp.load_module(name, file, filename, data)
             except Exception as e:
+                file.close()
                 raise Exception("Existing file '%s' is not a python importable file (%s)"%(fullpath, e))
+            else:
+                file.close()
             # check whether it's a pypref module
             try:
                 version     = mod.__pypref_version__
@@ -259,18 +261,7 @@ A valid filename must not contain especial characters or operating system separa
         #            s = "'%s'"%s
         #return s
 
-    def __dump_file(self, preferences, dynamic, temp=False):
-        if temp:
-            try:
-                fd = tempfile.NamedTemporaryFile(dir=tempfile._get_default_tempdir(), delete=True)
-            except Exception as e:
-                raise Exception("unable to create preferences temporary file. (%s)"%e)
-        else:
-            # try to open preferences file
-            try:
-                fd = open(self.fullpath, 'wb')
-            except Exception as e:
-                raise Exception("Unable to open preferences file '%s."%self.fullpath)
+    def __get_lines(self, preferences, dynamic):
         # write preferences
         lines  = "# This file is an automatically generated pypref preferences file. \n\n"
         lines += "__pypref_version__ = '%s' \n\n"%__version__
@@ -317,13 +308,23 @@ A valid filename must not contain especial characters or operating system separa
             if isinstance(v, basestring):
                 v = self.__get_normalized_string(v)
             lines += ("dynamic[%s]"%(k,)).ljust(maxLen) + " = %s\n"%(v,)
-        # write lines
+        return lines
+
+    def __dump_file(self, preferences, dynamic, temp=False):
         try:
-            fd.write( lines.encode('utf-8') )
-        except Exception as e:
-            raise Exception("Unable to write preferences to file '%s'. (%s)."%(self.fullpath, e))
-        # close file
-        fd.close()
+            lines = self.__get_lines(preferences=preferences, dynamic=dynamic)
+        except Exception as err:
+            raise Exception("unable to create preferences data. (%s)"%err)
+        # dump file
+        try:
+            if temp:
+                with tempfile.NamedTemporaryFile(mode='w+b',dir=tempfile._get_default_tempdir(), delete=True) as fd:
+                    fd.write( lines.encode('utf-8') )
+            else:
+                with open(self.fullpath, 'wb') as fd:
+                    fd.write( lines.encode('utf-8') )
+        except Exception as err:
+            raise Exception("unable to write preferences%sfile. (%s)"%(' temporary ' if temp else ' ', err))
 
     @property
     def directory(self):
@@ -517,7 +518,7 @@ class SinglePreferences(Preferences):
     This is singleton implementation of Preferences class.
     """
     __thisInstance = None
-    def __new__(cls, *args, **kwds):
+    def __new__(cls, *args, **kwargs):
         if cls.__thisInstance is None:
             cls.__thisInstance = super(SinglePreferences,cls).__new__(cls)
             cls.__thisInstance._isInitialized = False
