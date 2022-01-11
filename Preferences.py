@@ -95,9 +95,41 @@ else:
     long       = long
     basestring = basestring
 
+try:
+    from pathlib import Path as pPath
+except Exception as err:
+    pPath = None.__class__
+
 def _normalize_path(path):
     if os.sep=='\\':
         path = re.sub(r'([\\])\1+', r'\1', path).replace('\\','\\\\')
+    return path
+
+
+def resolve_path(path, normalize=True, allowNone=True):
+    """get path resolved as a string.
+
+    :Parameters:
+        #. path (None, string, pathlib.Path): If string, user expanded path will
+           be returned. If pathlib.Path is given, resolved string will be
+           returned.
+        #. normalize (boolean): if os.sep is '\\',  normalize will replace
+          '\\' with '\\\\'
+
+    :Returns:
+        #. result (None, string): None is returned if path is None, string
+           is returned otherwise
+    """
+    if path is not None:
+        if isinstance(path, str):
+            path = os.path.expanduser(path)
+            if normalize and os.sep=='\\':
+                path = re.sub(r'([\\])\1+', r'\1', path).replace('\\','\\\\')
+        else:
+            assert isinstance(path, pPath), "Given path must be None, string or pathlib.Path instance"
+            path = str(path.resolve())
+    elif not allowNone:
+        raise Exception("path must be given")
     return path
 
 class Preferences(object):
@@ -190,6 +222,7 @@ class Preferences(object):
         return pref
 
     def __set_directory(self, directory):
+        directory = resolve_path(directory)
         if directory is None:
             directory = os.path.expanduser('~')
         # try to set directory if it doesn't exist
@@ -205,6 +238,7 @@ class Preferences(object):
         self.__directory = _normalize_path(directory)#directory
 
     def __set_filename(self, filename):
+        filename = resolve_path(filename)
         assert isinstance(filename, basestring), "filename must be a string, '%s' is given."%filename
         filename = str(filename)
         assert os.path.basename(filename) == filename, "Given filename '%s' is not valid. \
