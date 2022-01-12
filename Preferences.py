@@ -100,20 +100,20 @@ try:
 except Exception as err:
     pPath = None.__class__
 
-def _normalize_path(path):
+def _fix_path_sep(path):
     if os.sep=='\\':
         path = re.sub(r'([\\])\1+', r'\1', path).replace('\\','\\\\')
     return path
 
 
-def resolve_path(path, normalize=True, allowNone=True):
+def resolve_path(path, fixSep=True, allowNone=True):
     """get path resolved as a string.
 
     :Parameters:
         #. path (None, string, pathlib.Path): If string, user expanded path will
            be returned. If pathlib.Path is given, resolved string will be
            returned.
-        #. normalize (boolean): if os.sep is '\\',  normalize will replace
+        #. fixSep (boolean): if os.sep is '\\',  normalize will replace
           '\\' with '\\\\'
 
     :Returns:
@@ -123,8 +123,8 @@ def resolve_path(path, normalize=True, allowNone=True):
     if path is not None:
         if isinstance(path, str):
             path = os.path.expanduser(path)
-            if normalize and os.sep=='\\':
-                path = re.sub(r'([\\])\1+', r'\1', path).replace('\\','\\\\')
+            if fixSep:
+                path = _fix_path_sep(path)
         else:
             assert isinstance(path, pPath), "Given path must be None, string or pathlib.Path instance"
             path = str(path.resolve())
@@ -235,7 +235,7 @@ class Preferences(object):
         except Exception as e:
             raise Exception("Given directory '%s' is not a writable directory."%directory)
         # set directory
-        self.__directory = _normalize_path(directory)#directory
+        self.__directory = _fix_path_sep(directory)#directory
 
     def __set_filename(self, filename):
         filename = resolve_path(filename)
@@ -246,7 +246,7 @@ A valid filename must not contain especial characters or operating system separa
         if not filename.endswith('.py'):
             filename += '.py'
             warnings.warn("'.py' appended to given filename '%s'"%filename)
-        self.__filename = _normalize_path(filename)#filename
+        self.__filename = _fix_path_sep(filename)#filename
 
     def __load_or_create(self):
         fullpath     = self.fullpath
@@ -365,7 +365,7 @@ A valid filename must not contain especial characters or operating system separa
     @property
     def fullpath(self):
         """Preferences file full path."""
-        return _normalize_path( os.path.join(self.__directory, self.__filename) )
+        return _fix_path_sep( os.path.join(self.__directory, self.__filename) )
 
     @property
     def preferences(self):
