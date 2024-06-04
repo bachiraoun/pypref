@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import unittest
-from pypref import Preferences
+from Preferences import Preferences
 from tempfile import TemporaryDirectory
 
 
