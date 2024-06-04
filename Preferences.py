@@ -70,39 +70,35 @@ This example shows how to use pypref.
 Preferences main module:
 ========================
 """
-## standard library imports
-from __future__ import print_function
-import sys, os, re, copy, tempfile
-from collections import OrderedDict
-import imp
+# standard library imports
+import copy
+import importlib
+import os
+import re
+import sys
+import tempfile
 import warnings
+from collections import OrderedDict
 
-## pypref package information imports
-from .__pkginfo__ import __version__
+# pypref package information imports
+# from .__pkginfo__ import __version__
 
-# python version dependant imports
-if sys.version_info >= (3, 0):
-    # This is python 3
-    str        = str
-    long       = int
-    unicode    = str
-    bytes      = bytes
-    basestring = str
-else:
-    str        = str
-    unicode    = unicode
-    bytes      = str
-    long       = long
-    basestring = basestring
+# This is python 3
+str = str
+long = int
+unicode = str
+bytes = bytes
+basestring = str
 
 try:
     from pathlib import Path as pPath
 except Exception as err:
     pPath = None.__class__
 
+
 def _fix_path_sep(path):
-    if os.sep=='\\':
-        path = re.sub(r'([\\])\1+', r'\1', path).replace('\\','\\\\')
+    if os.sep == '\\':
+        path = re.sub(r'([\\])\1+', r'\1', path).replace('\\', '\\\\')
     return path
 
 
@@ -131,6 +127,7 @@ def resolve_path(path, fixSep=True, allowNone=True):
     elif not allowNone:
         raise Exception("path must be given")
     return path
+
 
 class Preferences(object):
     """
@@ -192,33 +189,34 @@ class Preferences(object):
     at the end of initialization. custom_init method is an empty method that can be
     overloaded**
     """
+
     def __init__(self, directory=None, filename="preferences.py", *args, **kwargs):
         self.__set_directory(directory=directory)
         self.__set_filename(filename=filename)
         # load existing or create file
         self.__preferences = {}
-        self.__dynamic     = {}
+        self.__dynamic = {}
         self.__load_or_create()
         # custom initialize
-        self.custom_init( *args, **kwargs )
+        self.custom_init(*args, **kwargs)
 
     def __str__(self):
         return self.__get_lines(preferences=self.__preferences, dynamic=self.__dynamic)
 
     def __getitem__(self, key):
         pref = dict.__getitem__(self.__preferences, key)
-        dyn  = self.__dynamic.get(key, [])
+        dyn = self.__dynamic.get(key, [])
         # valuate preference
         if len(dyn):
             try:
                 for lib in dyn:
                     locals()[lib] = __import__(lib)
             except Exception as e:
-                raise Exception("Unable to import module '%s' for preference '%s' evaluation (e)"%(lib,pref,e))
+                raise Exception("Unable to import module '%s' for preference '%s' evaluation (e)" % (lib, pref, e))
             try:
                 pref = eval(pref)
             except Exception as e:
-                raise Exception("Unable to evaluate preference '%s' (%s)"%(key,e))
+                raise Exception("Unable to evaluate preference '%s' (%s)" % (key, e))
         return pref
 
     def __set_directory(self, directory):
@@ -227,70 +225,69 @@ class Preferences(object):
             directory = os.path.expanduser('~')
         # try to set directory if it doesn't exist
         if not os.path.exists(directory):
-            os.makedirs( directory )
+            os.makedirs(directory)
         # check if a directory is writable
         try:
-            testfile = tempfile.TemporaryFile(dir = directory)
+            testfile = tempfile.TemporaryFile(dir=directory)
             testfile.close()
         except Exception as e:
-            raise Exception("Given directory '%s' is not a writable directory."%directory)
+            raise Exception("Given directory '%s' is not a writable directory." % directory)
         # set directory
-        self.__directory = _fix_path_sep(directory)#directory
+        self.__directory = _fix_path_sep(directory)  # directory
 
     def __set_filename(self, filename):
         filename = resolve_path(filename)
-        assert isinstance(filename, basestring), "filename must be a string, '%s' is given."%filename
+        assert isinstance(filename, basestring), "filename must be a string, '%s' is given." % filename
         filename = str(filename)
         assert os.path.basename(filename) == filename, "Given filename '%s' is not valid. \
-A valid filename must not contain especial characters or operating system separator which is '%s' in this case."%(filename, os.sep)
+A valid filename must not contain especial characters or operating system separator which is '%s' in this case." % (
+        filename, os.sep)
         if not filename.endswith('.py'):
             filename += '.py'
-            warnings.warn("'.py' appended to given filename '%s'"%filename)
-        self.__filename = _fix_path_sep(filename)#filename
+            warnings.warn("'.py' appended to given filename '%s'" % filename)
+        self.__filename = _fix_path_sep(filename)  # filename
 
     def __load_or_create(self):
-        fullpath     = self.fullpath
-        exists       = os.path.isfile(fullpath) # this is not case sensitive !!!
+        fullpath = self.fullpath
+        exists = os.path.isfile(fullpath)  # this is not case-sensitive !!!
         if exists:
-            (path, name) = os.path.split(fullpath) # to use imp instead of importlib
-            (name, ext)  = os.path.splitext(name)  # to use imp instead of importlib
-            (file, filename, data) = imp.find_module(name, [path]) # to use imp instead of importlib
-            # try to import as python module
-            try:
-                mod = imp.load_module(name, file, filename, data)
-            except Exception as e:
-                file.close()
-                raise Exception("Existing file '%s' is not a python importable file (%s)"%(fullpath, e))
-            else:
-                file.close()
+            module_name = os.path.basename(fullpath)
+            spec = importlib.util.spec_from_loader(module_name,
+                                                   importlib.machinery.SourceFileLoader(module_name, fullpath))
+            module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(module)
+            sys.modules[module_name] = module
+
             # check whether it's a pypref module
             try:
-                version     = mod.__pypref_version__
-                preferences = mod.preferences
+                version = module.__pypref_version__
+                preferences = module.preferences
             except Exception as e:
-                raise Exception("Existing file '%s' is not a pypref file (%s)"%(fullpath, e))
+                raise Exception("Existing file '%s' is not a pypref file (%s)" % (fullpath, e))
             # try importing dynamic. Implemented started from version 2.0.0
             try:
-                dynamic = mod.dynamic
+                dynamic = module.dynamic
             except:
                 dynamic = {}
             # check preferences
-            assert isinstance(preferences, dict), "Existing file '%s' is not a pypref file (%s)"%(fullpath, e)
-            assert isinstance(dynamic, dict),     "Existing file '%s' is not a pypref file (%s)"%(fullpath, e)
+            assert isinstance(preferences, dict), "Existing file '%s' is not a pypref file " % fullpath
+            assert isinstance(dynamic, dict), "Existing file '%s' is not a pypref file " % fullpath
             self.__preferences = preferences
-            self.__dynamic     = dynamic
+            self.__dynamic = dynamic
         else:
-            self.__dump_file(preferences = {}, dynamic = {})
+            self.__dump_file(preferences={}, dynamic={})
             self.__preferences = {}
-            self.__dynamic     = {}
+            self.__dynamic = {}
 
     def __get_normalized_string(self, s):
         return str(repr(s))
 
     def __get_lines(self, preferences, dynamic):
+        # TODO: redo tho version so it dynamically takes the info
         # write preferences
-        lines  = "# This file is an automatically generated pypref preferences file. \n\n"
-        lines += "__pypref_version__ = '%s' \n\n"%(__version__,)
+        lines = "# This file is an automatically generated pypref preferences file. \n\n"
+        # lines += "__pypref_version__ = '%s' \n\n" % (__version__,)
+        lines += "__pypref_version__ = '4.0.0' \n\n"
         lines += "##########################################################################################\n"
         lines += "###################################### PREFERENCES #######################################\n"
         if isinstance(preferences, OrderedDict):
@@ -299,7 +296,7 @@ A valid filename must not contain especial characters or operating system separa
         else:
             lines += "preferences = {}" + "\n"
         ###### get maximum key length
-        maxLen  = [len(str(k)) for k in preferences.keys()]
+        maxLen = [len(str(k)) for k in preferences.keys()]
         if len(maxLen):
             maxLen = max(maxLen)
         else:
@@ -311,7 +308,7 @@ A valid filename must not contain especial characters or operating system separa
                 k = self.__get_normalized_string(k)
             if isinstance(v, basestring):
                 v = self.__get_normalized_string(v)
-            lines += ("preferences[%s]"%(k,)).ljust(maxLen) + " = %s\n"%(v,)
+            lines += ("preferences[%s]" % (k,)).ljust(maxLen) + " = %s\n" % (v,)
         ###### write dynamic
         lines += "\n"
         lines += "##########################################################################################\n"
@@ -322,7 +319,7 @@ A valid filename must not contain especial characters or operating system separa
         else:
             lines += "dynamic = {}" + "\n"
         # get maximum key length
-        maxLen  = [len(str(k)) for k in dynamic.keys()]
+        maxLen = [len(str(k)) for k in dynamic.keys()]
         if len(maxLen):
             maxLen = max(maxLen)
         else:
@@ -333,24 +330,24 @@ A valid filename must not contain especial characters or operating system separa
                 k = self.__get_normalized_string(k)
             if isinstance(v, basestring):
                 v = self.__get_normalized_string(v)
-            lines += ("dynamic[%s]"%(k,)).ljust(maxLen) + " = %s\n"%(v,)
+            lines += ("dynamic[%s]" % (k,)).ljust(maxLen) + " = %s\n" % (v,)
         return lines
 
     def __dump_file(self, preferences, dynamic, temp=False):
         try:
             lines = self.__get_lines(preferences=preferences, dynamic=dynamic)
-        except Exception as err:
-            raise Exception("unable to create preferences data. (%s)"%err)
+        except Exception as error:
+            raise Exception("unable to create preferences data. (%s)" % error)
         # dump file
         try:
             if temp:
-                with tempfile.NamedTemporaryFile(mode='w+b',dir=tempfile._get_default_tempdir(), delete=True) as fd:
-                    fd.write( lines.encode('utf-8') )
+                with tempfile.NamedTemporaryFile(mode='w+b', dir=tempfile._get_default_tempdir(), delete=True) as fd:
+                    fd.write(lines.encode('utf-8'))
             else:
                 with open(self.fullpath, 'wb') as fd:
-                    fd.write( lines.encode('utf-8') )
-        except Exception as err:
-            raise Exception("unable to write preferences%sfile. (%s)"%(' temporary ' if temp else ' ', err))
+                    fd.write(lines.encode('utf-8'))
+        except Exception as error:
+            raise Exception("unable to write preferences%sfile. (%s)" % (' temporary ' if temp else ' ', error))
 
     @property
     def directory(self):
@@ -365,7 +362,7 @@ A valid filename must not contain especial characters or operating system separa
     @property
     def fullpath(self):
         """Preferences file full path."""
-        return _fix_path_sep( os.path.join(self.__directory, self.__filename) )
+        return _fix_path_sep(os.path.join(self.__directory, self.__filename))
 
     @property
     def preferences(self):
@@ -380,7 +377,7 @@ A valid filename must not contain especial characters or operating system separa
     def custom_init(self, *args, **kwargs):
         """
         Custom initialize abstract method. This method will be called  at the end of
-        initialzation. This method needs to be overloaded to custom initialize
+        initialization. This method needs to be overloaded to custom initialize
         Preferences instances.
 
         :Parameters:
@@ -406,18 +403,18 @@ A valid filename must not contain especial characters or operating system separa
                key does not exist.
         """
         pref = self.__preferences.get(key, default)
-        dyn  = self.__dynamic.get(key, [])
+        dyn = self.__dynamic.get(key, [])
         # valuate preference
         if len(dyn):
             try:
                 for lib in dyn:
                     locals()[lib] = __import__(lib)
             except Exception as e:
-                raise Exception("Unable to import module '%s' for preference '%s' evaluation (e)"%(lib,pref,e))
+                raise Exception("Unable to import module '%s' for preference '%s' evaluation (e)" % (lib, pref, e))
             try:
                 pref = eval(pref)
             except Exception as e:
-                raise Exception("Unable to evaluate preference '%s'"%key)
+                raise Exception("Unable to evaluate preference '%s'" % key)
         # return
         return pref
 
@@ -462,7 +459,7 @@ A valid filename must not contain especial characters or operating system separa
             newDynamic = self.__dynamic
         else:
             assert isinstance(dynamic, dict), "dynamic must be None or a dictionary"
-            newDynamic  = copy.deepcopy(self.__dynamic)
+            newDynamic = copy.deepcopy(self.__dynamic)
             for p in dynamic:
                 if p not in newDynamic:
                     reset = True
@@ -483,7 +480,6 @@ A valid filename must not contain especial characters or operating system separa
         if reset:
             self.set_preferences(preferences=newPreferences, dynamic=newDynamic)
 
-
     def update_preferences(self, preferences, dynamic=None):
         """
         Add and update preferences with the given ones
@@ -501,10 +497,10 @@ A valid filename must not contain especial characters or operating system separa
             newDynamic = self.__dynamic
         else:
             assert isinstance(dynamic, dict), "dynamic must be None or a dictionary"
-            newDynamic  = copy.deepcopy(self.__dynamic)
+            newDynamic = copy.deepcopy(self.__dynamic)
             for p in dynamic:
                 v = dynamic[p]
-                if p not in newDynamic or newDynamic.get(p,None)!=v:
+                if p not in newDynamic or newDynamic.get(p, None) != v:
                     reset = True
                     newDynamic[p] = v
         # check prefererences
@@ -517,13 +513,12 @@ A valid filename must not contain especial characters or operating system separa
             newPreferences = copy.deepcopy(self.__preferences)
             for p in preferences:
                 v = preferences[p]
-                if p not in newPreferences or newPreferences.get(p,None)!=v:
+                if p not in newPreferences or newPreferences.get(p, None) != v:
                     reset = True
                     newPreferences[p] = v
         # set preferences
         if reset:
             self.set_preferences(preferences=newPreferences, dynamic=newDynamic)
-
 
     def set_preferences(self, preferences, dynamic=None):
         """
@@ -543,20 +538,22 @@ A valid filename must not contain especial characters or operating system separa
             try:
                 self.__dump_file(preferences=preferences, dynamic=self.__dynamic, temp=True)
             except Exception as e:
-                raise Exception("Unable to dump temporary preferences file (%s)."%e)
+                raise Exception("Unable to dump temporary preferences file (%s)." % e)
             # dump to file
             try:
                 self.__dump_file(preferences=preferences, dynamic=self.__dynamic, temp=False)
             except Exception as e:
-                raise Exception("Unable to dump preferences file (%s). Preferences file can be corrupt, but in memory stored preferences are still available and accessible using preferences property. Preferences are unchanged."%e)
+                raise Exception(
+                    "Unable to dump preferences file (%s). Preferences file can be corrupt, but in memory stored preferences are still available and accessible using preferences property. Preferences are unchanged." % e)
         else:
-            oldPreferences     = self.__preferences
+            oldPreferences = self.__preferences
             self.__preferences = preferences
             try:
                 self.set_dynamic(dynamic=dynamic)
             except Exception as e:
                 self.__preferences = oldPreferences
-                raise Exception("Unable to set dynamic from set_preferences method. Preferences file can be corrupt, but in memory stored preferences are still available and accessible using preferences property. Preferences are unchanged."%e)
+                raise Exception(
+                    "Unable to set dynamic from set_preferences method. Preferences file can be corrupt, but in memory stored preferences are still available and accessible using preferences property. Preferences are unchanged." % e)
         # set preferences
         self.__preferences = preferences
 
@@ -569,13 +566,14 @@ A valid filename must not contain especial characters or operating system separa
         """
         assert isinstance(dynamic, dict), "dynamic must be a dictionary"
         D = {}
-        for k,v in dynamic.items():
+        for k, v in dynamic.items():
             if not k in self.__preferences:
-                warnings.warn("dynamic key '%s' is discarded as it's not a valid preference"%k)
+                warnings.warn("dynamic key '%s' is discarded as it's not a valid preference" % k)
                 continue
             if v is not None:
-                assert isinstance(v, (list,set,tuple)), "dynamic dictionary values can be None or a list of importable modules"
-                assert len(set(v)) == len(v), "dynamic dictionary values are redundant for preference '%s'"%k
+                assert isinstance(v, (
+                list, set, tuple)), "dynamic dictionary values can be None or a list of importable modules"
+                assert len(set(v)) == len(v), "dynamic dictionary values are redundant for preference '%s'" % k
                 for m in v:
                     assert isinstance(m, basestring), "dynamic dictionary values must be a list of strings"
             else:
@@ -586,12 +584,13 @@ A valid filename must not contain especial characters or operating system separa
         try:
             self.__dump_file(preferences=self.__preferences, dynamic=dynamic, temp=True)
         except Exception as e:
-            raise Exception("Unable to dump temporary preferences file. Preferences are unchanged. (%s)"%e)
+            raise Exception("Unable to dump temporary preferences file. Preferences are unchanged. (%s)" % e)
         # dump to file
         try:
             self.__dump_file(preferences=self.__preferences, dynamic=dynamic, temp=False)
         except Exception as e:
-            raise Exception("Unable to dump preferences file (%s). Preferences file can be corrupt, but in memory stored preferences are still available and accessible using preferences property. Preferences are unchanged."%e)
+            raise Exception(
+                "Unable to dump preferences file (%s). Preferences file can be corrupt, but in memory stored preferences are still available and accessible using preferences property. Preferences are unchanged." % e)
         # set dynamic preferences
         self.__dynamic = dynamic
 
@@ -605,15 +604,13 @@ A valid filename must not contain especial characters or operating system separa
         assert isinstance(raiseError, bool), "raiseError must be boolean"
         try:
             oldPreferences = self.__preferences
-            oldDynamic     = self.__dynamic
+            oldDynamic = self.__dynamic
             self.__load_or_create()
         except Exception as err:
             self.__preferences = oldPreferences
-            self.__dynamic     = oldDynamic
+            self.__dynamic = oldDynamic
             if raiseError:
-                raise Exception("Unable to reload preferences (%s)"%err)
-
-
+                raise Exception("Unable to reload preferences (%s)" % err)
 
 
 class SinglePreferences(Preferences):
@@ -621,9 +618,10 @@ class SinglePreferences(Preferences):
     This is singleton implementation of Preferences class.
     """
     __thisInstance = None
+
     def __new__(cls, *args, **kwargs):
         if cls.__thisInstance is None:
-            cls.__thisInstance = super(SinglePreferences,cls).__new__(cls)
+            cls.__thisInstance = super(SinglePreferences, cls).__new__(cls)
             cls.__thisInstance._isInitialized = False
         return cls.__thisInstance
 

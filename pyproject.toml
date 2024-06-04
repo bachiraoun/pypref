@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pypref"
+description = "PyPref is a way to create an application's configuration, preferences, or settings file and dynamically interact and update them."
+version = "4.0.0"
+requires-python = ">= 3.11"
+readme = "README.md"
+authors = [{ name = "Bachir AOUN", email = "bachir.aoun@e-aoun.com" }]
+maintainers = [
+    { name = "Samuel Herts", email = "sdherts@gmail.com" },
+]
+keywords = ["preferences", "settings", "dynamic"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: Implementation",
+    "Topic :: Software Development",
+    "Topic :: Software Development :: Build Tools",
+    "Topic :: Scientific/Engineering",
+    "Operating System :: OS Independent"
+]
+
+[project.urls]
+Documentation = "https://bachiraoun.github.io/pypref/"
+Repository = "https://github.com/bachiraoun/pypref"
+Issues = "https://github.com/bachiraoun/pypref/issues"
