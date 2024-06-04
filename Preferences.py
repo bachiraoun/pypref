@@ -70,31 +70,25 @@ This example shows how to use pypref.
 Preferences main module:
 ========================
 """
-## standard library imports
-from __future__ import print_function
-import sys, os, re, copy, tempfile
-from collections import OrderedDict
-import imp
+# standard library imports
+import copy
+import importlib.util
+import os
+import re
+import sys
+import tempfile
 import warnings
 from collections import OrderedDict
 
 # pypref package information imports
 from .__pkginfo__ import __version__
 
-# python version dependant imports
-if sys.version_info >= (3, 0):
-    # This is python 3
-    str        = str
-    long       = int
-    unicode    = str
-    bytes      = bytes
-    basestring = str
-else:
-    str        = str
-    unicode    = unicode
-    bytes      = str
-    long       = long
-    basestring = basestring
+# This is python 3
+str = str
+long = int
+unicode = str
+bytes = bytes
+basestring = str
 
 try:
     from pathlib import Path as pPath
@@ -257,17 +251,20 @@ A valid filename must not contain especial characters or operating system separa
         fullpath = self.fullpath
         exists = os.path.isfile(fullpath)  # this is not case-sensitive !!!
         if exists:
-            (path, name) = os.path.split(fullpath) # to use imp instead of importlib
-            (name, ext)  = os.path.splitext(name)  # to use imp instead of importlib
-            (file, filename, data) = imp.find_module(name, [path]) # to use imp instead of importlib
+            (path, name) = os.path.split(fullpath)
+            name,  = os.path.splitext(name)
+            spec = importlib.util.spec_from_file_location(name, path)
+            mod = importlib.util.module_from_spec(spec)
+            sys.modules[name] = mod
+            spec.loader.exec_module(mod)
             # try to import as python module
-            try:
-                mod = imp.load_module(name, file, filename, data)
-            except Exception as e:
-                file.close()
-                raise Exception("Existing file '%s' is not a python importable file (%s)"%(fullpath, e))
-            else:
-                file.close()
+            # try:
+            #     mod = importlib.load_module(name, file, filename, data)
+            # except Exception as e:
+            #     file.close()
+            #     raise Exception("Existing file '%s' is not a python importable file (%s)" % (fullpath, e))
+            # else:
+            #     file.close()
             # check whether it's a pypref module
             try:
                 version = mod.__pypref_version__
