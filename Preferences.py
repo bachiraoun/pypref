@@ -72,7 +72,7 @@ Preferences main module:
 """
 # standard library imports
 import copy
-import importlib.util
+import importlib
 import os
 import re
 import sys
@@ -81,7 +81,7 @@ import warnings
 from collections import OrderedDict
 
 # pypref package information imports
-from .__pkginfo__ import __version__
+# from .__pkginfo__ import __version__
 
 # This is python 3
 str = str
@@ -251,29 +251,22 @@ A valid filename must not contain especial characters or operating system separa
         fullpath = self.fullpath
         exists = os.path.isfile(fullpath)  # this is not case-sensitive !!!
         if exists:
-            (path, name) = os.path.split(fullpath)
-            name,  = os.path.splitext(name)
-            spec = importlib.util.spec_from_file_location(name, path)
-            mod = importlib.util.module_from_spec(spec)
-            sys.modules[name] = mod
-            spec.loader.exec_module(mod)
-            # try to import as python module
-            # try:
-            #     mod = importlib.load_module(name, file, filename, data)
-            # except Exception as e:
-            #     file.close()
-            #     raise Exception("Existing file '%s' is not a python importable file (%s)" % (fullpath, e))
-            # else:
-            #     file.close()
+            module_name = os.path.basename(fullpath)
+            spec = importlib.util.spec_from_loader(module_name,
+                                                   importlib.machinery.SourceFileLoader(module_name, fullpath))
+            module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(module)
+            sys.modules[module_name] = module
+
             # check whether it's a pypref module
             try:
-                version = mod.__pypref_version__
-                preferences = mod.preferences
+                version = module.__pypref_version__
+                preferences = module.preferences
             except Exception as e:
                 raise Exception("Existing file '%s' is not a pypref file (%s)" % (fullpath, e))
             # try importing dynamic. Implemented started from version 2.0.0
             try:
-                dynamic = mod.dynamic
+                dynamic = module.dynamic
             except:
                 dynamic = {}
             # check preferences
@@ -290,9 +283,11 @@ A valid filename must not contain especial characters or operating system separa
         return str(repr(s))
 
     def __get_lines(self, preferences, dynamic):
+        # TODO: redo tho version so it dynamically takes the info
         # write preferences
         lines = "# This file is an automatically generated pypref preferences file. \n\n"
-        lines += "__pypref_version__ = '%s' \n\n" % (__version__,)
+        # lines += "__pypref_version__ = '%s' \n\n" % (__version__,)
+        lines += "__pypref_version__ = '4.0.0' \n\n"
         lines += "##########################################################################################\n"
         lines += "###################################### PREFERENCES #######################################\n"
         if isinstance(preferences, OrderedDict):
