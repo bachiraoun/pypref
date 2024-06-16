@@ -1,11 +1,13 @@
-__version__    = '3.3.1'
+__version__     = '4.0.0'
 
-__author__     = "Bachir Aoun"
+__author__      = "Bachir Aoun"
 
-__email__      = "bachir.aoun@e-aoun.com"
+__maintainers__ = ['Bachir Aoun', 'Samuel Herts']
 
-__onlinedoc__  = "http://bachiraoun.github.io/pypref/"
+__email__       = "bachir.aoun@e-aoun.com"
 
-__repository__ = "https://github.com/bachiraoun/pypref"
+__onlinedoc__   = "http://bachiraoun.github.io/pypref/"
 
-__pypi__       = "https://pypi.python.org/pypi/pypref"
+__repository__  = "https://github.com/bachiraoun/pypref"
+
+__pypi__        = "https://pypi.python.org/pypi/pypref"
