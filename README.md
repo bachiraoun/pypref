@@ -1,7 +1,7 @@
 # pypref
-PYthon PREFrences or pypref is a python implementation to creating application's 
-preferences file and dynamically interacting, updating and pulling preferences. 
-Most applications have default settings and preferences and in general those are 
+PYthon PREFrences or pypref creates an application's
+preferences file and allows for dynamically interacting, and updating preferences.
+Most applications have default settings and preferences and in general those are
 created and stored in a text file. At some point preferences are pulled and updated
 by the application and the users.
 pypref is especially designed to take care of this task automatically and make programing
@@ -21,7 +21,8 @@ Online documentation
 ====================
 http://bachiraoun.github.io/pypref/
 
-    
+
 Authors and developers
 ======================
-* [Bachir Aoun](https://www.linkedin.com/in/bachiraoun) (Author, Developer) 
+* [Bachir Aoun](https://www.linkedin.com/in/bachiraoun) (Author, Developer)
+* [Samuel Herts](https://github.com/SamHerts) (Developer)

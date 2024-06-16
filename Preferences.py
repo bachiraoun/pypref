@@ -74,8 +74,19 @@ Preferences main module:
 from __future__ import print_function
 import sys, os, re, copy, tempfile
 from collections import OrderedDict
-import imp
 import warnings
+
+try:
+    import importlib
+    spec_from_loader = importlib.util.spec_from_loader
+    module_from_spec = importlib.util.module_from_spec
+    SourceFileLoader = importlib.machinery.SourceFileLoader
+    imp             = None
+except:
+    # Deprecated since version 3.4, will be removed in version 3.12: The imp module is deprecated in favor of importlib.
+    importlib = spec_from_loader = module_from_spec = SourceFileLoader = None
+    import imp
+
 
 ## pypref package information imports
 from .__pkginfo__ import __version__
@@ -249,20 +260,29 @@ A valid filename must not contain especial characters or operating system separa
         self.__filename = _fix_path_sep(filename)#filename
 
     def __load_or_create(self):
-        fullpath     = self.fullpath
-        exists       = os.path.isfile(fullpath) # this is not case sensitive !!!
+        fullpath = self.fullpath
+        exists   = os.path.isfile(fullpath) # this is not case sensitive !!!
         if exists:
-            (path, name) = os.path.split(fullpath) # to use imp instead of importlib
-            (name, ext)  = os.path.splitext(name)  # to use imp instead of importlib
-            (file, filename, data) = imp.find_module(name, [path]) # to use imp instead of importlib
-            # try to import as python module
-            try:
-                mod = imp.load_module(name, file, filename, data)
-            except Exception as e:
-                file.close()
-                raise Exception("Existing file '%s' is not a python importable file (%s)"%(fullpath, e))
+            # use spec_from_loader
+            if importlib is not None:
+                name = os.path.basename(fullpath)
+                spec = spec_from_loader(name, SourceFileLoader(name, fullpath))
+                mod  = module_from_spec(spec)
+                spec.loader.exec_module(mod)
+                #sys.modules[name] = mod
+            # use imp
             else:
-                file.close()
+                (path, name) = os.path.split(fullpath) # to use imp instead of importlib
+                (name, ext)  = os.path.splitext(name)  # to use imp instead of importlib
+                (file, filename, data) = imp.find_module(name, [path]) # to use imp instead of importlib
+                # try to import as python module
+                try:
+                    mod = imp.load_module(name, file, filename, data)
+                except Exception as e:
+                    file.close()
+                    raise Exception("Existing file '%s' is not a python importable file (%s)"%(fullpath, e))
+                else:
+                    file.close()
             # check whether it's a pypref module
             try:
                 version     = mod.__pypref_version__
