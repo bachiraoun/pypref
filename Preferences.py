@@ -220,14 +220,16 @@ class Preferences(object):
         pref = dict.__getitem__(self.__preferences, key)
         dyn  = self.__dynamic.get(key, [])
         # valuate preference
+        _locals = {}
         if len(dyn):
             try:
                 for lib in dyn:
-                    locals()[lib] = __import__(lib)
+                    #locals()[lib] = __import__(lib)
+                    _locals[lib] = __import__(lib)
             except Exception as e:
                 raise Exception("Unable to import module '%s' for preference '%s' evaluation (e)"%(lib,pref,e))
             try:
-                pref = eval(pref)
+                pref = eval(pref, locals=_locals)
             except Exception as e:
                 raise Exception("Unable to evaluate preference '%s' (%s)"%(key,e))
         return pref
@@ -428,14 +430,16 @@ A valid filename must not contain especial characters or operating system separa
         pref = self.__preferences.get(key, default)
         dyn  = self.__dynamic.get(key, [])
         # valuate preference
+        _locals = {}
         if len(dyn):
             try:
                 for lib in dyn:
-                    locals()[lib] = __import__(lib)
+                    #locals()[lib] = __import__(lib)
+                    _locals[lib] = __import__(lib)
             except Exception as e:
                 raise Exception("Unable to import module '%s' for preference '%s' evaluation (e)"%(lib,pref,e))
             try:
-                pref = eval(pref)
+                pref = eval(pref, locals=_locals)
             except Exception as e:
                 raise Exception("Unable to evaluate preference '%s'"%key)
         # return
